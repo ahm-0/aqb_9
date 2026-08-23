@@ -12,13 +12,14 @@
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/performance.css">
   <link rel="stylesheet" href="assets/reference-ui.css">
+  <link rel="stylesheet" href="assets/app-theme.css">
   <title>مكتبة التاسع</title>
 </head>
 <body class="reference-page">
   <main class="reference-shell">
     <header class="reference-header">
       <a class="reference-brand" href="./" aria-label="مكتبة التاسع"><img src="assets/aqb9-logo.webp" alt="رمز مكتبة التاسع"><span><b>مكتبة التاسع</b><small>القسم المميز</small></span></a>
-      <button class="reference-icon-button" id="theme-button" aria-label="تبديل المظهر">☼</button>
+      <span id="theme-button" hidden aria-hidden="true"></span>
     </header>
 
     <section class="reference-hero" id="reference-hero">
@@ -38,5 +39,6 @@
   <dialog class="access-dialog" id="code-dialog"><button class="close-dialog" id="close-code-dialog" aria-label="إغلاق">×</button><div class="dialog-mark">⌘</div><p class="eyebrow">وصول مميز</p><h2 id="code-target">أدخل كودك</h2><p>أدخل الكود لفتح المحتوى.</p><form id="code-form"><label>كود الوصول<input id="access-code" placeholder="AQB9-XXXXXXXXXX" autocomplete="off" required></label><small class="form-error" id="code-error"></small><button class="primary-button full-width" type="submit" id="verify-code">فتح المحتوى</button></form></dialog>
   <script src="assets/protection.js"></script>
   <script src="assets/app.js"></script>
+  <script src="assets/app-theme.js"></script>
 </body>
 </html>
