@@ -12,3 +12,10 @@
 :root[data-theme="dark"] .access-dialog { color: #f7f7ff; background-color: #1c1c4b; }
 :root[data-theme="dark"] .access-dialog p, :root[data-theme="dark"] .access-dialog label { color: #c6c4e5; }
 :root[data-theme="dark"] .access-dialog input { color: #fff; background: #111136; border-color: #47477c; }
+:root[data-theme="dark"] .access-dialog { background: #1c1c4b !important; }
+:root[data-theme="dark"] .access-dialog .sheet-handle { background: #51517d; }
+:root[data-theme="dark"] .access-dialog .dialog-copy h2 { color: #f7f7ff; }
+:root[data-theme="dark"] .access-dialog .dialog-mark { border-color: #6f58b7; background: linear-gradient(145deg,#312d70,#25225b); }
+:root[data-theme="dark"] .access-dialog #access-code:focus { background: #191744; }
+:root[data-theme="dark"] .access-dialog .code-contact { border-color: #27715d; background: #132f2b; color: #e2fff6; }
+:root[data-theme="dark"] .access-dialog .code-contact-copy small { color: #afd1c6; }

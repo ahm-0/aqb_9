@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/performance.css">
   <link rel="stylesheet" href="assets/reference-ui.css">
+  <link rel="stylesheet" href="assets/access-code-sheet.css">
   <link rel="stylesheet" href="assets/app-theme.css">
   <title>مكتبة التاسع</title>
 </head>
@@ -36,7 +37,21 @@
     <section id="files-list" class="reference-list" hidden></section>
   </main>
 
-  <dialog class="access-dialog" id="code-dialog"><button class="close-dialog" id="close-code-dialog" aria-label="إغلاق">×</button><div class="dialog-mark">⌘</div><p class="eyebrow">وصول مميز</p><h2 id="code-target">أدخل كودك</h2><p>أدخل الكود لفتح المحتوى.</p><form id="code-form"><label>كود الوصول<input id="access-code" placeholder="AQB9-XXXXXXXXXX" autocomplete="off" required></label><small class="form-error" id="code-error"></small><button class="primary-button full-width" type="submit" id="verify-code">فتح المحتوى</button></form></dialog>
+  <dialog class="access-dialog" id="code-dialog" aria-labelledby="code-target" aria-describedby="code-dialog-description">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <button class="close-dialog" id="close-code-dialog" aria-label="إغلاق نافذة كود الوصول">×</button>
+    <div class="access-dialog-content">
+      <div class="dialog-copy"><h2 id="code-target">كود الوصول الشامل</h2><p id="code-dialog-description">يفتح جميع ملفات الصف التاسع</p></div>
+      <div class="dialog-mark" aria-hidden="true">◎</div>
+      <form id="code-form">
+        <label class="sr-only" for="access-code">كود الوصول</label>
+        <input id="access-code" placeholder="AQB9-XXXXXXXXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text" required>
+        <small class="form-error" id="code-error" aria-live="polite"></small>
+        <button class="primary-button full-width" type="submit" id="verify-code">تفعيل الوصول <span aria-hidden="true">◎</span></button>
+      </form>
+      <a class="code-contact" id="code-contact" href="#" hidden target="_blank" rel="noopener"><span class="code-contact-copy"><b id="code-contact-title">لشراء كود الوصول</b><small id="code-contact-price"></small></span><span class="code-contact-action">تواصل <i aria-hidden="true">◌</i></span></a>
+    </div>
+  </dialog>
   <script src="assets/protection.js"></script>
   <script src="assets/app.js"></script>
   <script src="assets/app-theme.js"></script>
