@@ -119,7 +119,7 @@
           result.classList.remove("hidden");
         }
         if (codes.length && navigator.clipboard) navigator.clipboard.writeText(codes.join("\n")).catch(() => {});
-        toast(`تم توليد ${codes.length} كوداً ونسخها.`); await loadData();
+        toast(`تم توليد ${codes.length} كوداً ونسخها.`); await loadData(); window.renderCodeRegistry?.();
       } catch (error) { toast(errorMessage(error, "تعذر إنشاء الكود."), true); }
       finally { syncGenerateLabel(); toggleSaving(button, false, generateButton?.textContent || "⌘ توليد الأكواد"); }
     }, true);
