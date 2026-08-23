@@ -9,7 +9,7 @@
     root.classList.toggle('dark', theme === 'dark');
     root.classList.toggle('light', theme !== 'dark');
     document.body.classList.toggle('reference-night', theme === 'dark');
-    if (colorMeta) colorMeta.content = theme === 'dark' ? '#0f0f2e' : '#f2f2f7';
+    if (colorMeta) colorMeta.content = theme === 'dark' ? '#050506' : '#f2f2f7';
   };
   const initialTheme = () => window.__APP_THEME__ || root.dataset.theme || (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   applyTheme(initialTheme());

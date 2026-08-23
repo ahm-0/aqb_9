@@ -48,11 +48,11 @@
     <div class="sheet-handle" aria-hidden="true"></div>
     <button class="close-dialog" id="close-code-dialog" aria-label="إغلاق نافذة كود الوصول">×</button>
     <div class="access-dialog-content">
-      <div class="dialog-copy"><h2 id="code-target">كود الوصول الشامل</h2><p id="code-dialog-description">يفتح جميع ملفات الصف التاسع</p></div>
-      <div class="dialog-mark" aria-hidden="true">◎</div>
+      <div class="dialog-copy"><span class="dialog-eyebrow">دخول محمي</span><h2 id="code-target">كود الوصول الشامل</h2><p id="code-dialog-description">يفتح جميع ملفات الصف التاسع</p></div>
+      <div class="dialog-mark" aria-hidden="true"><span>◎</span></div>
       <form id="code-form">
         <label class="sr-only" for="access-code">كود الوصول</label>
-        <input id="access-code" placeholder="AQB9-XXXXXXXXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text" required>
+        <div class="access-code-input"><span aria-hidden="true">⌘</span><input id="access-code" placeholder="AQB9-XXXXXXXXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text" required></div>
         <small class="form-error" id="code-error" aria-live="polite"></small>
         <button class="primary-button full-width" type="submit" id="verify-code">تفعيل الوصول <span aria-hidden="true">◎</span></button>
       </form>

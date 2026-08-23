@@ -1,21 +1,28 @@
-/* ألوان تتطابق مع appTheme في ChatWebViewActivity؛ تطبق تلقائياً بعد حقن WebView. */
-:root[data-theme="dark"] .reference-page { background: #0f0f2e; color: #fff; }
-:root[data-theme="dark"] .reference-shell { background: linear-gradient(180deg, #0f0f2e 0%, #12123a 100%); }
+/* وضع ليلي بتباين أسود وفحمي ولمسات بنفسجية زاهية متوافق مع WebView الأصلي. */
+:root[data-theme="dark"] .reference-page { background: #050506; color: #f7f6fb; }
+:root[data-theme="dark"] .reference-shell { background: radial-gradient(circle at 92% -8%, rgba(108,83,255,.2), transparent 28%), radial-gradient(circle at 5% 20%, rgba(83,64,198,.11), transparent 30%), #050506; }
+:root[data-theme="dark"] .reference-header { border-color: rgba(255,255,255,.06); background: rgba(5,5,7,.86); }
 :root[data-theme="dark"] .reference-brand b { color: #fff; }
-:root[data-theme="dark"] .reference-brand small, :root[data-theme="dark"] .reference-status, :root[data-theme="dark"] .reference-card small, :root[data-theme="dark"] .reference-empty { color: #a9a9cf; }
-:root[data-theme="dark"] .reference-global-code { border-color: #725ac3; background: rgba(32, 28, 79, .72); color: #c9b9ff; }
-:root[data-theme="dark"] .reference-global-code small { color: #b1afc7; }
-:root[data-theme="dark"] .reference-card, :root[data-theme="dark"] .reference-empty { border-color: #2f2f63; background: #1c1c4b; box-shadow: 0 7px 18px rgba(0,0,0,.22); }
-:root[data-theme="dark"] .reference-card b { color: #f7f7ff; }
-:root[data-theme="dark"] .reference-card .reference-card-arrow { background: #29295d; color: #8fabff; }
-:root[data-theme="dark"] .reference-back { color: #c0b5ff; }
-:root[data-theme="dark"] .access-dialog { color: #f7f7ff; background-color: #1c1c4b; }
-:root[data-theme="dark"] .access-dialog p, :root[data-theme="dark"] .access-dialog label { color: #c6c4e5; }
-:root[data-theme="dark"] .access-dialog input { color: #fff; background: #111136; border-color: #47477c; }
-:root[data-theme="dark"] .access-dialog { background: #1c1c4b !important; }
-:root[data-theme="dark"] .access-dialog .sheet-handle { background: #51517d; }
-:root[data-theme="dark"] .access-dialog .dialog-copy h2 { color: #f7f7ff; }
-:root[data-theme="dark"] .access-dialog .dialog-mark { border-color: #6f58b7; background: linear-gradient(145deg,#312d70,#25225b); }
-:root[data-theme="dark"] .access-dialog #access-code:focus { background: #191744; }
-:root[data-theme="dark"] .access-dialog .code-contact { border-color: #27715d; background: #132f2b; color: #e2fff6; }
-:root[data-theme="dark"] .access-dialog .code-contact-copy small { color: #afd1c6; }
+:root[data-theme="dark"] .reference-brand small, :root[data-theme="dark"] .reference-status, :root[data-theme="dark"] .reference-card small, :root[data-theme="dark"] .reference-empty { color: #9896a7; }
+:root[data-theme="dark"] .reference-global-code { border-color: #28272f; background: linear-gradient(135deg, #101014, #0b0b0e); color: #f0eff8; box-shadow: 0 10px 25px rgba(0,0,0,.24); }
+:root[data-theme="dark"] .reference-global-code .reference-global-icon { background: linear-gradient(135deg, #795fff, #4e3fe0); color: #fff; box-shadow: 0 8px 18px rgba(96,75,237,.28); }
+:root[data-theme="dark"] .reference-global-code small { color: #9896a7; }
+:root[data-theme="dark"] .reference-card, :root[data-theme="dark"] .reference-empty { border-color: #25252c; background: linear-gradient(135deg, #101014, #0b0b0e); box-shadow: 0 9px 20px rgba(0,0,0,.26); }
+:root[data-theme="dark"] .reference-card b { color: #f8f7fc; }
+:root[data-theme="dark"] .reference-card .reference-card-icon { background: linear-gradient(135deg, #775cff, #4c3ad7); color: #fff; box-shadow: 0 9px 19px rgba(97,75,235,.23); }
+:root[data-theme="dark"] .reference-card .reference-card-arrow { border-color: #23232b; background: #17171d; color: #9b8dff; }
+:root[data-theme="dark"] .reference-back { color: #b1a7ff; }
+:root[data-theme="dark"] .access-dialog { border-color: #2c2c35; color: #f7f6fb; background: linear-gradient(160deg, #15151b 0%, #0d0d11 100%) !important; box-shadow: 0 -24px 74px rgba(0,0,0,.72); }
+:root[data-theme="dark"] .access-dialog .sheet-handle { background: #4a4955; }
+:root[data-theme="dark"] .access-dialog .close-dialog { border-color: #2c2c35; background: #1b1b22; color: #b7b4c4; box-shadow: none; }
+:root[data-theme="dark"] .access-dialog .dialog-eyebrow { color: #c4b9ff; background: rgba(107,84,255,.17); }
+:root[data-theme="dark"] .access-dialog .dialog-copy h2 { color: #fff; }
+:root[data-theme="dark"] .access-dialog .dialog-copy p { color: #9996a7; }
+:root[data-theme="dark"] .access-dialog .dialog-mark { border-color: rgba(139,120,255,.66); background: linear-gradient(145deg, #755cff, #4330c9); box-shadow: inset 0 1px 1px rgba(255,255,255,.3), 0 14px 30px rgba(81,55,235,.35); }
+:root[data-theme="dark"] .access-dialog .access-code-input { border-color: #30303a; background: #0a0a0d; box-shadow: none; }
+:root[data-theme="dark"] .access-dialog .access-code-input:focus-within { border-color: #7966ff; box-shadow: 0 0 0 4px rgba(107,84,255,.18); }
+:root[data-theme="dark"] .access-dialog .access-code-input > span { background: rgba(107,84,255,.18); color: #b8aeff; }
+:root[data-theme="dark"] .access-dialog #access-code { color: #fbfaff; background: transparent; }
+:root[data-theme="dark"] .access-dialog #access-code::placeholder { color: #696775; }
+:root[data-theme="dark"] .access-dialog .code-contact { border-color: #1f5145; background: #0e201d; color: #e1fff3; box-shadow: none; }
+:root[data-theme="dark"] .access-dialog .code-contact-copy small { color: #91b4a7; }

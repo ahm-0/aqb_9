@@ -1,183 +1,42 @@
-/* بطاقة كود الوصول: ورقة سفلية هادئة مستوحاة من واجهة التطبيق المرجعية. */
+/* بوابة وصول احترافية: ورقة سفلية مركزة ومهيأة للضوء والليل. */
 .reference-page .access-dialog {
   position: fixed;
   inset: auto 0 0;
   width: min(100%, 680px);
   max-width: 680px;
-  max-height: calc(100dvh - 10px);
+  max-height: min(760px, calc(100dvh - 12px));
   margin: 0 auto;
   overflow: auto;
-  border: 0;
-  border-radius: 34px 34px 0 0;
-  padding: 12px clamp(20px, 5vw, 48px) calc(24px + env(safe-area-inset-bottom));
-  color: #232331;
-  background: #fbfbff !important;
-  background-image: none !important;
-  box-shadow: 0 -12px 44px rgba(11, 12, 32, .26);
+  border: 1px solid rgba(84, 76, 166, .16);
+  border-bottom: 0;
+  border-radius: 32px 32px 0 0;
+  padding: 12px clamp(20px, 5vw, 50px) calc(26px + env(safe-area-inset-bottom));
+  color: #242432;
+  background: linear-gradient(160deg, #ffffff 0%, #f6f5ff 100%) !important;
+  box-shadow: 0 -22px 70px rgba(10, 10, 28, .34);
 }
-
-.reference-page .access-dialog::backdrop {
-  background: rgba(9, 12, 25, .5);
-  backdrop-filter: blur(4px);
-}
-
-.access-dialog .sheet-handle {
-  width: 51px;
-  height: 5px;
-  margin: 6px auto 30px;
-  border-radius: 99px;
-  background: #e1e1e8;
-}
-
-.access-dialog .close-dialog {
-  position: absolute;
-  top: 70px;
-  left: 22px;
-  width: 51px;
-  height: 51px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: #eeeef3;
-  color: #82828d;
-  font-size: 31px;
-  font-weight: 400;
-  line-height: 1;
-}
-
-.access-dialog-content {
-  display: grid;
-  justify-items: center;
-  text-align: center;
-}
-
-.access-dialog .dialog-copy {
-  display: grid;
-  gap: 7px;
-  max-width: calc(100% - 82px);
-}
-
-.access-dialog .dialog-copy h2 {
-  color: #25252f;
-  font-family: Cairo, sans-serif;
-  font-size: clamp(22px, 5vw, 30px);
-  line-height: 1.35;
-  letter-spacing: -.06em;
-}
-
-.access-dialog .dialog-copy p {
-  color: #898994;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.access-dialog .dialog-mark {
-  display: grid;
-  width: 112px;
-  height: 112px;
-  margin: 30px 0 28px;
-  place-items: center;
-  border: 2px solid #cbbafb;
-  border-radius: 34px;
-  background: linear-gradient(145deg, #eeebff, #ded8fc);
-  color: #7a39e1;
-  box-shadow: inset 0 1px 0 #fff, 0 8px 22px rgba(122, 57, 225, .08);
-  font-size: 57px;
-  line-height: 1;
-}
-
-.access-dialog form {
-  display: grid;
-  width: 100%;
-  gap: 12px;
-}
-
-.access-dialog #access-code {
-  width: 100%;
-  height: 76px;
-  padding: 0 18px;
-  border: 2px solid #d1d1d7;
-  border-radius: 25px;
-  outline: 0;
-  color: #4b4b57;
-  background: #ebebee;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .05);
-  direction: ltr;
-  text-align: center;
-  font-family: Cairo, sans-serif;
-  font-size: clamp(19px, 5.5vw, 27px);
-  font-weight: 700;
-  letter-spacing: .12em;
-  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
-}
-
-.access-dialog #access-code::placeholder { color: #a6a6b0; opacity: 1; }
-.access-dialog #access-code:focus { border-color: #9a7ee9; background: #f8f6ff; box-shadow: 0 0 0 4px rgba(133, 88, 235, .15); }
-.access-dialog .form-error { min-height: 0; color: #c44b59; font-size: 13px; font-weight: 700; }
-
-.access-dialog .primary-button {
-  min-height: 70px;
-  margin: 0;
-  border-radius: 25px;
-  background: linear-gradient(135deg, #bba0f1, #b792eb);
-  box-shadow: 0 11px 22px rgba(143, 95, 223, .18);
-  font-family: Cairo, sans-serif;
-  font-size: 18px;
-}
-
-.access-dialog .primary-button:hover { background: linear-gradient(135deg, #ad90e9, #a67fdf); }
-.access-dialog .primary-button span { font-size: 25px; }
-
-.access-dialog .code-contact {
-  display: flex;
-  width: 100%;
-  min-height: 98px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  margin-top: 28px;
-  padding: 14px 17px;
-  border: 2px solid #c5eee3;
-  border-radius: 25px;
-  background: #f3fffb;
-  color: #54555b;
-  box-shadow: 0 7px 18px rgba(12, 145, 103, .06);
-  text-align: right;
-}
-
+.reference-page .access-dialog::backdrop { background: rgba(5, 6, 15, .64); backdrop-filter: blur(8px) saturate(.75); }
+.access-dialog .sheet-handle { width: 46px; height: 5px; margin: 5px auto 24px; border-radius: 999px; background: #d9d8e6; }
+.access-dialog .close-dialog { position: absolute; top: 52px; left: 22px; display: grid; width: 43px; height: 43px; place-items: center; padding: 0; border: 1px solid #e2e1ec; border-radius: 14px; background: rgba(255,255,255,.85); color: #706f82; box-shadow: 0 5px 12px rgba(44,40,89,.06); font-size: 27px; font-weight: 400; line-height: 1; }
+.access-dialog-content { display: grid; justify-items: center; text-align: center; }
+.access-dialog .dialog-copy { display: grid; gap: 5px; max-width: calc(100% - 78px); }
+.access-dialog .dialog-eyebrow { justify-self: center; padding: 5px 9px; border-radius: 999px; color: #6256cc; background: #ece9ff; font-size: 10px; font-weight: 900; letter-spacing: .05em; }
+.access-dialog .dialog-copy h2 { margin: 4px 0 0; color: #232330; font-family: Cairo, sans-serif; font-size: clamp(22px, 5vw, 29px); line-height: 1.35; letter-spacing: -.06em; }
+.access-dialog .dialog-copy p { margin: 0; color: #79788a; font-size: 13px; font-weight: 700; }
+.access-dialog .dialog-mark { display: grid; width: 78px; height: 78px; margin: 19px 0; place-items: center; border: 1px solid #8e81ff; border-radius: 25px; background: linear-gradient(145deg, #735eff 0%, #4d40de 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,.35), 0 13px 26px rgba(84, 67, 231, .25); color: #fff; font-size: 38px; }
+.access-dialog .dialog-mark span { display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid rgba(255,255,255,.25); border-radius: 15px; background: rgba(255,255,255,.14); }
+.access-dialog form { display: grid; width: 100%; gap: 10px; }
+.access-dialog .access-code-input { display: flex; min-height: 66px; align-items: center; gap: 11px; padding: 0 15px; border: 1px solid #dedceb; border-radius: 18px; background: #fff; box-shadow: 0 8px 22px rgba(40,37,87,.07); transition: border-color 160ms ease, box-shadow 160ms ease; }
+.access-dialog .access-code-input:focus-within { border-color: #7566f0; box-shadow: 0 0 0 4px rgba(94,78,230,.13), 0 8px 22px rgba(40,37,87,.07); }
+.access-dialog .access-code-input > span { display: grid; width: 33px; height: 33px; flex: 0 0 auto; place-items: center; border-radius: 11px; background: #ece9ff; color: #5d51d5; font-weight: 900; }
+.access-dialog #access-code { width: 100%; min-width: 0; height: 62px; padding: 0; border: 0; outline: 0; color: #343245; background: transparent; direction: ltr; text-align: left; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: clamp(15px, 4.2vw, 18px); font-weight: 800; letter-spacing: .08em; }
+.access-dialog #access-code::placeholder { color: #a5a3b2; opacity: 1; }
+.access-dialog .form-error { min-height: 0; color: #c3495c; font-size: 12px; font-weight: 800; }
+.access-dialog .primary-button { min-height: 60px; margin: 2px 0 0; border: 1px solid rgba(79,63,206,.32); border-radius: 18px; background: linear-gradient(135deg, #7565ff 0%, #5444df 100%); box-shadow: 0 12px 24px rgba(79,63,206,.24); font-family: Cairo, sans-serif; font-size: 16px; font-weight: 900; }
+.access-dialog .primary-button span { font-size: 22px; }
+.access-dialog .code-contact { display: flex; width: 100%; min-height: 80px; align-items: center; justify-content: space-between; gap: 14px; margin-top: 18px; padding: 12px 14px; border: 1px solid #caeee0; border-radius: 18px; background: linear-gradient(135deg, #f6fffc, #edfbf5); color: #40574e; box-shadow: 0 7px 18px rgba(12,145,103,.06); text-align: right; }
 .access-dialog .code-contact[hidden] { display: none; }
-.code-contact-copy { display: grid; flex: 1; gap: 6px; }
-.code-contact-copy b { font-size: 15px; }
-.code-contact-copy small { color: #777982; font-size: 12px; font-weight: 700; }
-
-.code-contact-action {
-  display: inline-flex;
-  min-width: 106px;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  padding: 13px 14px;
-  border-radius: 17px;
-  background: #1fd26c;
-  color: #fff;
-  box-shadow: 0 7px 16px rgba(31, 210, 108, .24);
-  font-size: 15px;
-  font-weight: 800;
-}
-
-.code-contact-action i { font-size: 24px; font-style: normal; line-height: 1; }
+.code-contact-copy { display: grid; flex: 1; gap: 4px; }.code-contact-copy b { font-size: 13px; }.code-contact-copy small { color: #6d857b; font-size: 11px; font-weight: 700; }
+.code-contact-action { display: inline-flex; min-width: 94px; align-items: center; justify-content: center; gap: 6px; padding: 11px 12px; border-radius: 13px; background: #1fca70; color: #fff; box-shadow: 0 7px 14px rgba(31,202,112,.22); font-size: 13px; font-weight: 900; }.code-contact-action i { font-size: 20px; font-style: normal; line-height: 1; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-
-@media (max-width: 520px) {
-  .reference-page .access-dialog { border-radius: 32px 32px 0 0; padding-inline: 20px; }
-  .access-dialog .sheet-handle { margin-bottom: 26px; }
-  .access-dialog .close-dialog { top: 63px; left: 20px; width: 48px; height: 48px; }
-  .access-dialog .dialog-copy h2 { font-size: 24px; }
-  .access-dialog .dialog-mark { width: 105px; height: 105px; margin: 25px 0; font-size: 53px; }
-  .access-dialog #access-code { height: 70px; border-radius: 23px; font-size: 21px; }
-  .access-dialog .primary-button { min-height: 65px; border-radius: 23px; font-size: 16px; }
-  .access-dialog .code-contact { min-height: 91px; margin-top: 24px; padding: 12px; border-radius: 22px; }
-  .code-contact-copy b { font-size: 13px; }
-  .code-contact-copy small { font-size: 11px; }
-  .code-contact-action { min-width: 91px; padding: 12px 10px; border-radius: 15px; font-size: 13px; }
-}
+@media (max-width: 520px) { .reference-page .access-dialog { border-radius: 29px 29px 0 0; padding-inline: 20px; } .access-dialog .sheet-handle { margin-bottom: 20px; } .access-dialog .close-dialog { top: 43px; left: 19px; width: 40px; height: 40px; } .access-dialog .dialog-mark { margin: 16px 0; } .access-dialog .access-code-input { min-height: 62px; } .access-dialog #access-code { height: 58px; } .access-dialog .primary-button { min-height: 57px; } }
