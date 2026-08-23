@@ -9,7 +9,7 @@
   };
   const errorMessage = (error, fallback) => {
     const message = safeText(error?.message || error || fallback);
-    if (/duplicate|unique|already exists/i.test(message)) return "رابط المادة مستخدم مسبقاً. غيّره ثم حاول مرة أخرى.";
+    if (/duplicate|unique|already exists/i.test(message)) return "اسم المادة أو معرفها مستخدم مسبقاً. غيّره ثم حاول مرة أخرى.";
     if (/administrator|permission|jwt|auth/i.test(message)) return "انتهت جلسة المشرف أو لا توجد صلاحية. سجّل الدخول من جديد.";
     if (/drive|url|https/i.test(message)) return "تحقق من رابط Google Drive: يجب أن يبدأ بـ https://";
     return message || fallback;
@@ -30,6 +30,7 @@
     if (name && slug) {
       slug.removeAttribute("pattern");
       slug.required = false;
+      slug.closest("label")?.remove();
       name.addEventListener("input", () => { if (!slug.dataset.userEdited) slug.value = slugify(name.value); });
       slug.addEventListener("input", () => { slug.dataset.userEdited = "true"; });
     }
@@ -79,24 +80,48 @@
     }, true);
   };
   const bindCode = (form) => {
+    form.elements.custom?.closest("label")?.remove();
+    if (!form.querySelector("[data-batch-quantity]")) {
+      const quantity = document.createElement("label");
+      quantity.dataset.batchQuantity = "true";
+      quantity.innerHTML = 'عدد الأكواد<input name="quantity" type="number" min="1" max="100" value="1" required>';
+      const usesRow = form.elements.uses?.closest(".form-row");
+      if (usesRow) usesRow.insertAdjacentElement("afterend", quantity);
+    }
+    const generateButton = form.querySelector('button[type="submit"], button.primary-button');
+    const quantityInput = form.elements.quantity;
+    const syncGenerateLabel = () => {
+      const total = Math.min(100, Math.max(1, Number(quantityInput?.value || 1)));
+      if (quantityInput) quantityInput.value = String(total);
+      if (generateButton) generateButton.textContent = `⌘ توليد ${total} ${total === 1 ? "كود" : "أكواد"}`;
+    };
+    quantityInput?.addEventListener("input", syncGenerateLabel);
+    syncGenerateLabel();
     form.addEventListener("submit", async (event) => {
       event.preventDefault(); event.stopImmediatePropagation();
       const data = new FormData(form); const button = form.querySelector('button[type="submit"], button.primary-button');
       const scope = data.get("scope");
       if (scope === "file" && !data.get("file")) return toast("اختر ملفاً أو غيّر النوع إلى كود شامل.", true);
-      toggleSaving(button, true, "⌘ إنشاء الكود");
+      const quantity = Number(data.get("quantity") || 1);
+      if (quantity < 1 || quantity > 100) return toast("اختر عدداً من 1 إلى 100 كود.", true);
+      toggleSaving(button, true, "⌘ توليد الأكواد");
       try {
-        const rows = await rpc("admin_generate_ninth_access_code", {
+        const rows = await rpc("admin_generate_ninth_access_code_batch", {
           p_scope: scope, p_file_id: scope === "file" ? data.get("file") : null,
-          p_max_uses: Number(data.get("uses") || 1), p_expires_at: data.get("expires") ? new Date(data.get("expires")).toISOString() : null,
-          p_note: safeText(data.get("note")), p_custom_code: safeText(data.get("custom")) || null
+          p_quantity: quantity, p_max_uses: Number(data.get("uses") || 1),
+          p_expires_at: data.get("expires") ? new Date(data.get("expires")).toISOString() : null,
+          p_note: safeText(data.get("note"))
         });
-        const code = Array.isArray(rows) ? rows[0]?.code : rows?.code;
-        const result = byId("code-result"); if (result) { result.textContent = code || "تم إنشاء الكود"; result.classList.remove("hidden"); }
-        if (code && navigator.clipboard) navigator.clipboard.writeText(code).catch(() => {});
-        toast("تم إنشاء الكود ونسخه. احتفظ به الآن."); await loadData();
+        const codes = (Array.isArray(rows) ? rows : [rows]).map((row) => safeText(row?.code)).filter(Boolean);
+        const result = byId("code-result");
+        if (result) {
+          result.innerHTML = `<small>الأكواد الجديدة — احفظها الآن</small><div class="batch-codes" dir="ltr">${codes.map((code) => `<code>${code}</code>`).join("")}</div>`;
+          result.classList.remove("hidden");
+        }
+        if (codes.length && navigator.clipboard) navigator.clipboard.writeText(codes.join("\n")).catch(() => {});
+        toast(`تم توليد ${codes.length} كوداً ونسخها.`); await loadData();
       } catch (error) { toast(errorMessage(error, "تعذر إنشاء الكود."), true); }
-      finally { toggleSaving(button, false, "⌘ إنشاء الكود"); }
+      finally { syncGenerateLabel(); toggleSaving(button, false, generateButton?.textContent || "⌘ توليد الأكواد"); }
     }, true);
   };
   document.addEventListener("submit", (event) => {

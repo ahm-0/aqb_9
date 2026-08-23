@@ -1,6 +1,12 @@
 /* تحسين أداء GitHub Pages: استبدال آخر مرجع لصورة PNG كبيرة بنسخة WebP مصغرة. */
 body .access-dialog { background-image: url("aqb9-pdf-viewer-bg.webp"); }
 
+/* نتيجة توليد دفعة الأكواد: قائمة مميزة تُظهر كل كود مرة واحدة للمشرف. */
+.code-result { display: grid; gap: 10px; text-align: right; }
+.code-result > small { color: #514eaa; font-weight: 800; direction: rtl; }
+.batch-codes { display: grid; gap: 7px; max-height: 300px; overflow: auto; padding: 3px; }
+.batch-codes code { display: block; padding: 9px 11px; border-radius: 9px; color: #312e81; background: #fff; border: 1px dashed #9588e9; font-size: 15px; font-weight: 900; letter-spacing: .08em; user-select: text; }
+
 /* الهاتف: لا يظهر الشريط الجانبي، لذلك يعرض شريط أقسام ثابت للوصول إلى النماذج. */
 .mobile-admin-nav { display: none; }
 @media (max-width: 820px) {
