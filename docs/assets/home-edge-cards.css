@@ -11,11 +11,14 @@
 .reference-empty {
   border-radius: 14px;
 }
+#subjects-list,
 #files-list {
   width: 100%;
   margin-inline: 0;
-  gap: 10px;
+  gap: 0;
 }
+#subjects-list > .reference-card + .reference-card,
+#files-list > .reference-card + .reference-card { margin-top: 12px; }
 #files-list .reference-card { padding-inline: 18px; }
 
 @media (min-width: 521px) {
