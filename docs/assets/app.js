@@ -33,12 +33,14 @@ function setSyncStatus(message, type = "sync", hideAfter = 0) {
   const bar = $("#sync-status");
   if (!bar) return;
   clearTimeout(syncTimer);
-  bar.textContent = message;
+  const label = $("#sync-status-label");
+  if (label) label.textContent = message;
   bar.hidden = false;
   bar.classList.toggle("is-offline", type === "offline");
   bar.classList.toggle("is-error", type === "error");
   if (hideAfter) syncTimer = window.setTimeout(() => { bar.hidden = true; }, hideAfter);
 }
+function hideSyncStatus() { clearTimeout(syncTimer); const bar = $("#sync-status"); if (bar) bar.hidden = true; }
 
 function removeSplashAfterDelay() {
   const tryRemove = (retries = 15) => {
@@ -75,7 +77,7 @@ async function openSubject(id, pushHistory = true) {
   if (pushHistory) history.pushState({ aqb9Subject: id }, "", `${location.pathname}${location.search}#subject=${encodeURIComponent(id)}`);
   $("#open-global-code").classList.add("hidden"); setHero(subject.name, "ملفات حصرية متاحة");
   const localFiles = cachedSubjectFiles(id);
-  if (localFiles !== null) { state.files = localFiles; renderFiles(); setSyncStatus("جارٍ تحديث ملفات المادة…"); }
+  if (localFiles !== null) { state.files = localFiles; renderFiles(); setSyncStatus("جارٍ تحديث ملفات المادة…", "sync", 5000); }
   else setStatus("جارٍ تحميل الملفات…");
   if (!navigator.onLine) {
     if (localFiles !== null) setSyncStatus("تعمل النسخة المحفوظة من ملفات المادة دون إنترنت.", "offline", 4500);
@@ -83,7 +85,7 @@ async function openSubject(id, pushHistory = true) {
     return;
   }
   try {
-    state.files = await rpc("list_ninth_files", { p_subject_id: id }); saveSubjectFiles(id, state.files); renderFiles(); setSyncStatus("تم تحديث ملفات المادة.", "sync", 1800);
+    state.files = await rpc("list_ninth_files", { p_subject_id: id }); saveSubjectFiles(id, state.files); renderFiles(); hideSyncStatus();
   } catch {
     if (localFiles !== null) { state.files = localFiles; renderFiles(); setSyncStatus("تعذر التحديث؛ تظهر آخر ملفات محفوظة.", "error", 4500); }
     else { state.files = []; renderFiles(); setSyncStatus("تعذر تحميل ملفات المادة.", "error", 4500); }
@@ -142,7 +144,7 @@ async function refreshCatalog() {
     else setStatus("لا توجد نسخة محفوظة بعد. اتصل بالإنترنت مرة واحدة لحفظ المكتبة على الجهاز.");
     return;
   }
-  if (hadCachedContent) setSyncStatus("جارٍ تحديث البيانات…");
+  if (hadCachedContent) setSyncStatus("جارٍ تحديث البيانات…", "sync", 5000);
   try {
     const [subjects, settings] = await Promise.all([rpc("list_ninth_subjects"), rpc("get_ninth_settings")]);
     state.subjects = subjects || []; state.settings = settings?.[0] || state.settings; saveCatalog();
@@ -151,7 +153,7 @@ async function refreshCatalog() {
       if (refreshedSubject) { state.subject = refreshedSubject; await openSubject(subjectId, false); }
       else resetToSubjects();
     } else renderSubjects();
-    if (!state.subject) setSyncStatus(hadCachedContent ? "تم تحديث البيانات." : "تم تحميل أحدث البيانات.", "sync", 1800);
+    if (!state.subject) hideSyncStatus();
   } catch {
     if (hadCachedContent) setSyncStatus("تعذر التحديث؛ تظهر النسخة المحفوظة.", "error", 4500);
     else setStatus("تعذر تحميل المحتوى. اتصل بالإنترنت أولاً لحفظ المكتبة على هذا الجهاز.");
@@ -161,7 +163,7 @@ async function refreshCatalog() {
 function load() {
   if (!history.state?.aqb9Subject) history.replaceState({ aqb9View: "subjects" }, "", `${location.pathname}${location.search}`);
   const catalog = readCatalog();
-  if (catalog?.subjects?.length) { state.subjects = catalog.subjects; state.settings = catalog.settings || state.settings; renderSubjects(); setSyncStatus("جارٍ تحديث البيانات…"); }
+  if (catalog?.subjects?.length) { state.subjects = catalog.subjects; state.settings = catalog.settings || state.settings; renderSubjects(); setSyncStatus("جارٍ تحديث البيانات…", "sync", 5000); }
   else setStatus("جارٍ تحميل المحتوى…");
   refreshCatalog();
 }
