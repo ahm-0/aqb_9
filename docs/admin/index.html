@@ -9,13 +9,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="stylesheet" href="../assets/performance.css">
   <title>إدارة مكتبة التاسع</title>
 </head>
 <body class="admin-page">
   <main id="auth-screen" class="auth-screen">
     <section class="auth-layout">
-      <aside class="auth-art"><img src="../assets/aqb9-admin-study.png" alt="أدوات دراسة منظمة"><span>◈ بوابة إدارة مكتبة الصف التاسع</span></aside>
-      <section class="auth-card"><a class="brand" href="../"><img src="../assets/aqb9-logo.png" alt="رمز مكتبة الصف التاسع"><span><b>مكتبة التاسع</b><small>القسم المميز</small></span></a><span class="system-label">▤ أدوات المواد والملفات والأكواد</span><p class="eyebrow">رابط إدارة خاص</p><h1 id="auth-title">دخول المشرف</h1><p>لن تظهر أدوات الإدارة إلا بعد التحقق من الحساب وصلاحية المشرف في قاعدة البيانات.</p>
+      <aside class="auth-art"><img src="../assets/aqb9-admin-study.webp" alt="أدوات دراسة منظمة"><span>◈ بوابة إدارة مكتبة الصف التاسع</span></aside>
+      <section class="auth-card"><a class="brand" href="../"><img src="../assets/aqb9-logo.webp" alt="رمز مكتبة الصف التاسع"><span><b>مكتبة التاسع</b><small>القسم المميز</small></span></a><span class="system-label">▤ أدوات المواد والملفات والأكواد</span><p class="eyebrow">رابط إدارة خاص</p><h1 id="auth-title">دخول المشرف</h1><p>لن تظهر أدوات الإدارة إلا بعد التحقق من الحساب وصلاحية المشرف في قاعدة البيانات.</p>
         <form id="auth-form"><label>البريد الإلكتروني<input id="auth-email" type="email" autocomplete="email" required></label><label>كلمة المرور<input id="auth-password" type="password" minlength="6" autocomplete="current-password" required></label><small class="form-error" id="auth-error"></small><button class="primary-button full-width" id="auth-submit" type="submit">تسجيل الدخول</button></form><button class="text-button" id="switch-auth">ليس لديك حساب؟ أنشئ حساباً</button>
       </section>
     </section>
@@ -24,7 +25,7 @@
   <main id="denied-screen" class="auth-screen hidden"><section class="denied-card"><div>!</div><p class="eyebrow">تم تسجيل الدخول</p><h1>هذا الحساب ليس مشرفاً بعد</h1><p id="denied-email"></p><p>أضف الحساب إلى جدول <code>public.ninth_admins</code> من تعليمات المشروع، ثم أعد تسجيل الدخول.</p><button class="secondary-button" id="denied-logout">تسجيل الخروج</button></section></main>
 
   <main id="admin-app" class="admin-shell hidden">
-    <aside class="admin-sidebar"><a class="brand" href="../"><img src="../assets/aqb9-logo.png" alt=""><span><b>مكتبة التاسع</b><small>إدارة المحتوى</small></span></a><p>إدارة المحتوى</p><nav id="admin-nav"><button data-view="overview" class="active">▦ نظرة عامة</button><button data-view="subjects">▧ المواد</button><button data-view="files">▤ الملفات</button><button data-view="codes">⌘ أكواد الوصول</button><button data-view="settings">⚙ الإعدادات</button></nav><div class="admin-user"><span id="admin-initial">م</span><div><b>مشرف الصف التاسع</b><small id="admin-email"></small></div><button id="logout-button" title="تسجيل الخروج">↩</button></div></aside>
+    <aside class="admin-sidebar"><a class="brand" href="../"><img src="../assets/aqb9-logo.webp" alt=""><span><b>مكتبة التاسع</b><small>إدارة المحتوى</small></span></a><p>إدارة المحتوى</p><nav id="admin-nav"><button data-view="overview" class="active">▦ نظرة عامة</button><button data-view="subjects">▧ المواد</button><button data-view="files">▤ الملفات</button><button data-view="codes">⌘ أكواد الوصول</button><button data-view="settings">⚙ الإعدادات</button></nav><div class="admin-user"><span id="admin-initial">م</span><div><b>مشرف الصف التاسع</b><small id="admin-email"></small></div><button id="logout-button" title="تسجيل الخروج">↩</button></div></aside>
     <section class="admin-workspace"><header class="admin-topbar"><div><p class="eyebrow">لوحة المشرف</p><h1 id="admin-title">نظرة عامة</h1></div><span class="trust-chip">◈ محمي بتسجيل الدخول</span></header><div class="admin-content" id="admin-content"></div></section>
   </main>
   <script src="../assets/admin.js"></script>

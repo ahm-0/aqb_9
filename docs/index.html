@@ -10,11 +10,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/performance.css">
   <title>مكتبة التاسع | القسم المميز</title>
 </head>
 <body class="student-page">
   <header class="library-header">
-    <a class="brand" href="./" aria-label="مكتبة الصف التاسع"><img src="assets/aqb9-logo.png" alt="رمز كتاب ومسار الرقم تسعة"><span><b>مكتبة التاسع</b><small>القسم المميز</small></span></a>
+    <a class="brand" href="./" aria-label="مكتبة الصف التاسع"><img src="assets/aqb9-logo.webp" alt="رمز كتاب ومسار الرقم تسعة"><span><b>مكتبة التاسع</b><small>القسم المميز</small></span></a>
     <span class="trust-chip">◈ وصول منظّم وآمن</span>
   </header>
   <main>
@@ -25,7 +26,7 @@
         <p>اختر المادة، تصفح الملفات المتاحة، ثم استخدم كودك للوصول إلى المحتوى مباشرة داخل العارض.</p>
         <button class="primary-button hero-code" id="open-global-code">⌘ لدي كود شامل <span id="global-price">…</span></button>
       </div>
-      <div class="hero-image" aria-hidden="true"><img src="assets/aqb9-hero-study.png" alt=""><span class="floating-badge top">▱ الصف التاسع</span><span class="floating-badge bottom">▤ ملفات منتقاة</span></div>
+      <div class="hero-image" aria-hidden="true"><img src="assets/aqb9-hero-study.webp" alt=""><span class="floating-badge top">▱ الصف التاسع</span><span class="floating-badge bottom">▤ ملفات منتقاة</span></div>
     </section>
     <section class="library-content" id="library-content">
       <div class="section-heading"><div><p class="eyebrow">ابدأ من المادة</p><h2 id="view-title">اختر ما تريد مراجعته اليوم</h2></div><span class="count-chip" id="subject-count">…</span></div>
@@ -35,7 +36,7 @@
       <div id="files-list" class="file-list" hidden></div>
     </section>
   </main>
-  <footer class="library-footer"><a class="brand compact" href="./"><img src="assets/aqb9-logo.png" alt=""><span><b>مكتبة التاسع</b><small>محتوى منظم للطالب</small></span></a><a class="quiet-link" href="admin/">بوابة المشرف</a></footer>
+  <footer class="library-footer"><a class="brand compact" href="./"><img src="assets/aqb9-logo.webp" alt=""><span><b>مكتبة التاسع</b><small>محتوى منظم للطالب</small></span></a><a class="quiet-link" href="admin/">بوابة المشرف</a></footer>
   <dialog class="access-dialog" id="code-dialog"><button class="close-dialog" id="close-code-dialog" aria-label="إغلاق">×</button><div class="dialog-mark">⌘</div><p class="eyebrow">وصول مميز</p><h2 id="code-target">أدخل كودك</h2><p>يتم التحقق من الكود بأمان ثم فتح الملف بالرابط المباشر داخل العارض المتاح.</p><form id="code-form"><label>كود الوصول<input id="access-code" placeholder="AQB9-XXXXXXXXXX" autocomplete="off" required></label><small class="form-error" id="code-error"></small><button class="primary-button full-width" type="submit" id="verify-code">فتح المحتوى</button></form></dialog>
   <script src="assets/app.js"></script>
 </body>
