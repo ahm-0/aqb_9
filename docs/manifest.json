@@ -1,0 +1,22 @@
+{
+  "id": "./",
+  "name": "مكتبة التاسع",
+  "short_name": "مكتبة التاسع",
+  "description": "القسم المميز للصف التاسع",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f7f7fb",
+  "theme_color": "#4d65ec",
+  "icons": [
+    {
+      "src": "assets/aqb9-logo.webp",
+      "sizes": "any",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}

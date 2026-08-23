@@ -1,0 +1,31 @@
+/* واجهة تطبيق هادئة: لا وميض لمس ولا حركة أو تغيير عند الضغط على الأزرار. */
+.reference-page button,
+.reference-page .reference-card,
+.reference-page .reference-global-code,
+.reference-page .reference-back {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: none !important;
+}
+
+.reference-page button:hover,
+.reference-page button:active,
+.reference-page .reference-card:hover,
+.reference-page .reference-card:active,
+.reference-page .reference-global-code:hover,
+.reference-page .reference-global-code:active,
+.reference-page .reference-back:hover,
+.reference-page .reference-back:active {
+  transform: none !important;
+  filter: none !important;
+}
+
+.reference-page .reference-card:hover,
+.reference-page .reference-card:active {
+  box-shadow: 0 5px 12px rgba(27, 30, 63, .035);
+}
+
+.reference-page .access-dialog .primary-button:hover,
+.reference-page .access-dialog .primary-button:active {
+  background: linear-gradient(135deg, #bba0f1, #b792eb);
+}
