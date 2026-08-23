@@ -1,0 +1,19 @@
+/* أدوات تعديل وحذف المواد والملفات: أفعال واضحة داخل القائمة وحوار تحرير مركّز. */
+.manage-item { align-items: center; }
+.manage-actions { display: inline-flex; flex: 0 0 auto; gap: 7px; margin-inline-start: auto; }
+.manage-actions button { border: 0; border-radius: 8px; padding: 7px 9px; background: #eeeaff; color: #49429e; font-family: inherit; font-size: 11px; font-weight: 900; cursor: pointer; }
+.manage-actions .manage-delete { background: #ffe8eb; color: #a0394b; }
+.admin-edit-dialog { width: min(100% - 28px, 620px); max-height: calc(100dvh - 28px); overflow: auto; border: 0; border-radius: 20px; padding: 0; color: #24243a; background: #fffdfa; box-shadow: 0 25px 60px rgba(25,25,55,.25); }
+.admin-edit-dialog::backdrop { background: rgba(20,20,45,.55); backdrop-filter: blur(3px); }
+.admin-edit-dialog form { display: grid; gap: 14px; padding: 22px; }
+.admin-edit-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-bottom: 15px; border-bottom: 1px solid rgba(49,46,129,.12); }
+.admin-edit-head h2 { margin: 3px 0 0; font-family: Cairo, sans-serif; font-size: 20px; letter-spacing: -.04em; }
+.admin-edit-close { width: 38px; height: 38px; border: 0; border-radius: 11px; background: #f0eff6; color: #676579; font-size: 25px; line-height: 1; cursor: pointer; }
+.admin-edit-fields { display: grid; gap: 12px; }
+.admin-edit-fields label { display: grid; gap: 6px; color: #3c3b55; font-size: 12px; font-weight: 900; }
+.admin-edit-fields input, .admin-edit-fields textarea, .admin-edit-fields select { width: 100%; border: 1px solid rgba(49,46,129,.16); border-radius: 10px; padding: 10px 11px; background: #fff; color: #24243a; font: inherit; outline: 0; }
+.admin-edit-fields textarea { min-height: 90px; resize: vertical; }
+.admin-edit-fields input:focus, .admin-edit-fields textarea:focus, .admin-edit-fields select:focus { border-color: #5048b4; box-shadow: 0 0 0 3px rgba(80,72,180,.12); }
+.admin-edit-footer { display: flex; justify-content: flex-end; gap: 9px; padding-top: 15px; border-top: 1px solid rgba(49,46,129,.12); }
+.admin-edit-footer .primary-button, .admin-edit-footer .secondary-button { padding: 10px 14px; }
+@media (max-width: 620px) { .manage-item { flex-wrap: wrap; } .manage-actions { width: 100%; margin-inline-start: 0; } .manage-actions button { flex: 1; } .admin-edit-dialog form { padding: 18px; } .admin-edit-footer { flex-direction: column-reverse; } .admin-edit-footer .primary-button, .admin-edit-footer .secondary-button { width: 100%; } }
