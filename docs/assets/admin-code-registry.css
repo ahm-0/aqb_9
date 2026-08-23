@@ -1,24 +1,9 @@
-/* سجل أكواد الإدارة: بطاقات مقروءة تعرض رمز الوصول ونطاقه وفترة صلاحيته وحالته. */
+/* مستكشف الأكواد: تسلسل مواد ثم ملفات ثم أكواد، ببطاقات خفيفة ومقروءة. */
 .code-registry { min-width: 0; }
-.admin-code-list { display: grid; gap: 12px; }
-.admin-code-card { display: grid; gap: 13px; padding: 16px; border: 1px solid rgba(49,46,129,.13); border-radius: 15px; background: #fffdfa; box-shadow: 0 7px 16px rgba(49,46,129,.04); }
-.admin-code-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.registry-state { display: inline-flex; align-items: center; min-height: 28px; padding: 4px 9px; border-radius: 999px; font-size: 11px; font-weight: 900; }
-.registry-state.active { color: #067868; background: #ddf9f0; }
-.registry-state.off { color: #7a3a42; background: #ffe7ea; }
-.registry-state.expired { color: #8a5a09; background: #fff2d8; }
-.registry-state.used { color: #566070; background: #edf0f5; }
-.registry-code { display: flex; align-items: center; gap: 8px; padding: 9px; border-radius: 12px; background: #f5f3ff; border: 1px dashed #b7a9ec; }
-.registry-code code { min-width: 0; flex: 1; color: #28215d; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; font-weight: 900; letter-spacing: .06em; overflow-wrap: anywhere; }
-.registry-copy, .registry-toggle { border: 0; border-radius: 9px; padding: 8px 10px; font-family: inherit; font-size: 12px; font-weight: 900; cursor: pointer; }
-.registry-copy { color: #fff; background: #4b46a7; }
-.registry-copy:disabled { color: #8b8b98; background: #e5e4ec; cursor: not-allowed; }
-.registry-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; }
-.registry-details div { min-width: 0; padding: 9px 10px; border-radius: 10px; background: #f9f8fc; }
-.registry-details dt { margin-bottom: 3px; color: #747387; font-size: 10px; font-weight: 800; }
-.registry-details dd { margin: 0; color: #2f3041; font-size: 12px; font-weight: 800; line-height: 1.55; overflow-wrap: anywhere; }
-.registry-note { margin: 0; color: #666479; font-size: 12px; line-height: 1.65; }
-.registry-toggle { justify-self: start; color: #4b46a7; background: #edeaff; }
-.registry-toggle:hover { color: #fff; background: #4b46a7; }
-.registry-empty { margin: 0; color: #777589; text-align: center; }
-@media (max-width: 560px) { .registry-details { grid-template-columns: 1fr; } .registry-code { align-items: stretch; flex-direction: column; } .registry-copy { width: 100%; } }
+.code-explorer-list, .explorer-code-list { display: grid; gap: 11px; }
+.code-explorer-card { display: flex; width: 100%; align-items: center; gap: 12px; padding: 13px; border: 1px solid rgba(49,46,129,.13); border-radius: 15px; background: #fffdfa; color: #28283b; box-shadow: 0 7px 16px rgba(49,46,129,.04); text-align: right; cursor: pointer; }
+.code-explorer-card > span:nth-child(2) { display: grid; flex: 1; min-width: 0; gap: 3px; }.code-explorer-card b { overflow: hidden; font-size: 14px; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }.code-explorer-card small { color: #77758b; font-size: 11px; font-weight: 800; }.code-explorer-card i { color: #5950bf; font-size: 25px; font-style: normal; }.code-explorer-symbol { display: grid; width: 45px; height: 45px; flex: 0 0 45px; place-items: center; border-radius: 14px; background: linear-gradient(145deg,#725eff,#4c3ad5); color: #fff; font-size: 22px; box-shadow: 0 7px 15px rgba(84,63,215,.2); }.code-explorer-global .code-explorer-symbol { background: linear-gradient(145deg,#925fff,#5c31d8); }
+.code-explorer-back { justify-self: start; border: 0; padding: 5px 0 8px; background: transparent; color: #544bba; font-family: inherit; font-size: 12px; font-weight: 900; cursor: pointer; }.code-explorer-context { margin: -2px 0 1px; color: #3e3c54; font-family: Cairo,sans-serif; font-size: 18px; font-weight: 900; letter-spacing: -.04em; }.code-explorer-empty { margin: 0; padding: 24px 12px; color: #77758a; text-align: center; font-size: 13px; font-weight: 800; }
+.explorer-code-row { display: grid; gap: 8px; padding: 13px; border: 1px solid rgba(49,46,129,.13); border-radius: 14px; background: #fffdfa; }.explorer-code-meta { display: flex; justify-content: flex-end; }.registry-state { display: inline-flex; align-items: center; min-height: 26px; padding: 4px 8px; border-radius: 999px; font-size: 10px; font-weight: 900; }.registry-state.active { color: #067868; background: #ddf9f0; }.registry-state.off { color: #7a3a42; background: #ffe7ea; }.registry-state.expired { color: #8a5a09; background: #fff2d8; }.registry-state.used { color: #566070; background: #edf0f5; }
+.explorer-code-value { display: flex; align-items: center; gap: 8px; padding: 8px; border: 1px dashed #b7a9ec; border-radius: 11px; background: #f5f3ff; }.explorer-code-value code { min-width: 0; flex: 1; overflow-wrap: anywhere; color: #28215d; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 13px; font-weight: 900; letter-spacing: .06em; }.registry-copy,.registry-reissue { flex: 0 0 auto; border: 0; border-radius: 8px; padding: 8px 10px; font-family: inherit; font-size: 11px; font-weight: 900; cursor: pointer; }.registry-copy { color: #fff; background: #4b46a7; }.registry-reissue { color: #6e4caa; background: #ece6ff; }.explorer-legacy-note { margin: 0; color: #817b8e; font-size: 11px; font-weight: 700; line-height: 1.65; }
+@media (max-width: 560px) { .explorer-code-value { align-items: stretch; flex-direction: column; }.registry-copy,.registry-reissue { width: 100%; }.code-explorer-card { padding: 12px; } }
