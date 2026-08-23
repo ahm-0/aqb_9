@@ -1,5 +1,5 @@
 /* تحديث رقم الإصدار مع أي إصدار منشور لضمان تنشيط عامل خدمة جديد فوراً. */
-const CACHE_NAME = "aqb9-static-2026-08-23-05";
+const CACHE_NAME = "aqb9-static-2026-08-23-06";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,6 +7,8 @@ const APP_SHELL = [
   "./assets/styles.css",
   "./assets/performance.css",
   "./assets/reference-ui.css",
+  "./assets/files-edge-to-edge.css",
+  "./assets/home-edge-cards.css",
   "./assets/touch-neutral.css",
   "./assets/access-code-sheet.css",
   "./assets/app-theme.css",
