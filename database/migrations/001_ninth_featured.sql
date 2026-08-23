@@ -223,7 +223,7 @@ begin
     raise exception 'invalid access code' using errcode = '22023';
   end if;
 
-  v_code_hash := encode(digest(v_normalized_code, 'sha256'), 'hex');
+  v_code_hash := encode(extensions.digest(v_normalized_code, 'sha256'), 'hex');
 
   select * into v_code
   from public.ninth_access_codes
@@ -546,7 +546,7 @@ begin
   if char_length(v_code) < 6 then
     raise exception 'custom code is too short' using errcode = '22023';
   end if;
-  v_hash := encode(digest(v_code, 'sha256'), 'hex');
+  v_hash := encode(extensions.digest(v_code, 'sha256'), 'hex');
 
   insert into public.ninth_access_codes (
     scope, file_id, code_hash, max_uses, expires_at, note, created_by

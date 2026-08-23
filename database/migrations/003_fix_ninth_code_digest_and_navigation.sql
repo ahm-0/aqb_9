@@ -1,4 +1,4 @@
--- توليد دفعات أكواد وصول تلقائية؛ تحفظ التجزئات فقط وتُرجع النص مرة واحدة للمشرف.
+-- يصل pgcrypto في هذا المشروع من مخطط extensions؛ يجب تأهيل digest صراحة داخل الدالة SECURITY DEFINER.
 create or replace function public.admin_generate_ninth_access_code_batch(
   p_scope public.ninth_code_scope,
   p_file_id uuid default null,
@@ -67,11 +67,3 @@ begin
   end loop;
 end;
 $$;
-
-revoke all on function public.admin_generate_ninth_access_code_batch(
-  public.ninth_code_scope, uuid, integer, integer, timestamptz, text
-) from public, anon;
-
-grant execute on function public.admin_generate_ninth_access_code_batch(
-  public.ninth_code_scope, uuid, integer, integer, timestamptz, text
-) to authenticated;
