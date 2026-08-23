@@ -1,0 +1,25 @@
+/* بطاقات الصفحة العامة: تمتد بعرض الشاشة مع مسافة دقيقة موحّدة حول كل بطاقة. */
+.reference-page { overflow-x: hidden; }
+.reference-shell {
+  width: 100%;
+  max-width: none;
+  padding-inline: 2px;
+}
+.reference-header { margin-inline: 18px; }
+.reference-hero,
+.reference-global-code,
+.reference-card,
+.reference-empty {
+  border-radius: 14px;
+}
+#files-list {
+  width: 100%;
+  margin-inline: 0;
+  gap: 10px;
+}
+#files-list .reference-card { padding-inline: 18px; }
+
+@media (min-width: 521px) {
+  .reference-header { margin-inline: 26px; }
+  #files-list .reference-card { padding-inline: 26px; }
+}
