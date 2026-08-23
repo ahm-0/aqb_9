@@ -1,2 +1,19 @@
 /* تحسين أداء GitHub Pages: استبدال آخر مرجع لصورة PNG كبيرة بنسخة WebP مصغرة. */
 body .access-dialog { background-image: url("aqb9-pdf-viewer-bg.webp"); }
+
+/* الهاتف: لا يظهر الشريط الجانبي، لذلك يعرض شريط أقسام ثابت للوصول إلى النماذج. */
+.mobile-admin-nav { display: none; }
+@media (max-width: 820px) {
+  .admin-shell { display: block; }
+  .admin-workspace { min-height: 100vh; }
+  .mobile-admin-nav { display: flex; gap: 8px; overflow-x: auto; overscroll-behavior-inline: contain; padding: 10px 16px 11px; position: sticky; top: 0; z-index: 12; background: rgba(255,253,250,.96); border-bottom: 1px solid rgba(49,46,129,.12); box-shadow: 0 6px 15px rgba(49,46,129,.05); }
+  .mobile-admin-nav button { flex: 0 0 auto; border: 1px solid rgba(49,46,129,.15); border-radius: 10px; background: #fff; color: #4b496b; padding: 9px 11px; font-size: 12px; font-weight: 800; }
+  .mobile-admin-nav button.active { color: #fff; border-color: #312e81; background: #312e81; box-shadow: 0 6px 14px rgba(49,46,129,.2); }
+  .admin-content { padding: 20px 14px 44px; }
+  .admin-grid { display: flex; flex-direction: column; gap: 13px; }
+  .editor-card, .data-card { width: 100%; padding: 18px 15px; border-radius: 16px; }
+  .editor-card input, .editor-card textarea, .editor-card select { font-size: 16px; min-height: 44px; }
+  .editor-card textarea { min-height: 94px; }
+  .editor-card .primary-button { min-height: 48px; position: sticky; bottom: 10px; z-index: 3; }
+  .code-result { overflow-wrap: anywhere; font-size: 16px; }
+}
