@@ -1,43 +1,41 @@
 <!doctype html>
-<!-- تصميم مكتبة الطالب المميزة: صفحة HTML مستقلة، RTL، ورفوف مواد ملونة على خلفية ورقية. -->
+<!-- مرجع بنك الأسئلة الأكاديمي: واجهة مواد وملفات هاتفية مبسطة بلا مكونات إضافية. -->
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#312e81">
-  <meta name="description" content="القسم المميز للصف التاسع">
+  <meta name="theme-color" content="#4d65ec">
+  <meta name="description" content="مكتبة الصف التاسع">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/performance.css">
-  <title>مكتبة التاسع | القسم المميز</title>
+  <link rel="stylesheet" href="assets/reference-ui.css">
+  <title>مكتبة التاسع</title>
 </head>
-<body class="student-page">
-  <header class="library-header">
-    <a class="brand" href="./" aria-label="مكتبة الصف التاسع"><img src="assets/aqb9-logo.webp" alt="رمز كتاب ومسار الرقم تسعة"><span><b>مكتبة التاسع</b><small>القسم المميز</small></span></a>
-    <span class="trust-chip">◈ وصول منظّم وآمن</span>
-  </header>
-  <main>
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">✦ القسم المميز للصف التاسع</p>
-        <h1>ملفاتك الدراسية،<br><em>بترتيب يختصر عليك الطريق.</em></h1>
-        <p>اختر المادة، تصفح الملفات المتاحة، ثم استخدم كودك للوصول إلى المحتوى مباشرة داخل العارض.</p>
-        <button class="primary-button hero-code" id="open-global-code">⌘ لدي كود شامل <span id="global-price">…</span></button>
-      </div>
-      <div class="hero-image" aria-hidden="true"><img src="assets/aqb9-hero-study.webp" alt=""><span class="floating-badge top">▱ الصف التاسع</span><span class="floating-badge bottom">▤ ملفات منتقاة</span></div>
+<body class="reference-page">
+  <main class="reference-shell">
+    <header class="reference-header">
+      <a class="reference-brand" href="./" aria-label="مكتبة التاسع"><img src="assets/aqb9-logo.webp" alt="رمز مكتبة التاسع"><span><b>مكتبة التاسع</b><small>القسم المميز</small></span></a>
+      <button class="reference-icon-button" id="theme-button" aria-label="تبديل المظهر">☼</button>
+    </header>
+
+    <section class="reference-hero" id="reference-hero">
+      <span class="reference-hero-icon">▤</span>
+      <div><h1 id="hero-title">الصف التاسع</h1><p id="hero-subtitle">اختر المادة لعرض الملفات</p></div>
+      <span class="reference-hero-arrow">←</span>
     </section>
-    <section class="library-content" id="library-content">
-      <div class="section-heading"><div><p class="eyebrow">ابدأ من المادة</p><h2 id="view-title">اختر ما تريد مراجعته اليوم</h2></div><span class="count-chip" id="subject-count">…</span></div>
-      <button class="back-button hidden" id="back-to-subjects">← جميع المواد</button>
-      <div id="app-status" class="loading-card">نرتّب المواد لك…</div>
-      <div id="subjects-list" class="subject-list" hidden></div>
-      <div id="files-list" class="file-list" hidden></div>
-    </section>
+
+    <button class="reference-global-code" id="open-global-code"><span class="reference-global-icon">◎</span><span><b>تفعيل كود الوصول الشامل</b><small>كود واحد يفتح جميع ملفات الصف التاسع</small></span><i>←</i></button>
+
+    <button class="reference-back hidden" id="back-to-subjects">← جميع المواد</button>
+    <div id="app-status" class="reference-status">جارٍ تحميل المحتوى…</div>
+    <section id="subjects-list" class="reference-list" hidden></section>
+    <section id="files-list" class="reference-list" hidden></section>
   </main>
-  <footer class="library-footer"><a class="brand compact" href="./"><img src="assets/aqb9-logo.webp" alt=""><span><b>مكتبة التاسع</b><small>محتوى منظم للطالب</small></span></a><a class="quiet-link" href="admin/">بوابة المشرف</a></footer>
-  <dialog class="access-dialog" id="code-dialog"><button class="close-dialog" id="close-code-dialog" aria-label="إغلاق">×</button><div class="dialog-mark">⌘</div><p class="eyebrow">وصول مميز</p><h2 id="code-target">أدخل كودك</h2><p>يتم التحقق من الكود بأمان ثم فتح الملف بالرابط المباشر داخل العارض المتاح.</p><form id="code-form"><label>كود الوصول<input id="access-code" placeholder="AQB9-XXXXXXXXXX" autocomplete="off" required></label><small class="form-error" id="code-error"></small><button class="primary-button full-width" type="submit" id="verify-code">فتح المحتوى</button></form></dialog>
+
+  <dialog class="access-dialog" id="code-dialog"><button class="close-dialog" id="close-code-dialog" aria-label="إغلاق">×</button><div class="dialog-mark">⌘</div><p class="eyebrow">وصول مميز</p><h2 id="code-target">أدخل كودك</h2><p>أدخل الكود لفتح المحتوى.</p><form id="code-form"><label>كود الوصول<input id="access-code" placeholder="AQB9-XXXXXXXXXX" autocomplete="off" required></label><small class="form-error" id="code-error"></small><button class="primary-button full-width" type="submit" id="verify-code">فتح المحتوى</button></form></dialog>
   <script src="assets/app.js"></script>
 </body>
 </html>
