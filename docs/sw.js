@@ -1,5 +1,5 @@
 /* تحديث رقم الإصدار مع أي إصدار منشور لضمان تنشيط عامل خدمة جديد فوراً. */
-const CACHE_NAME = "aqb9-static-2026-08-23-06";
+const CACHE_NAME = "aqb9-static-2026-08-23-07";
 const APP_SHELL = [
   "./",
   "./index.html",
