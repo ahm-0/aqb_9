@@ -6,7 +6,7 @@ const AQB9 = {
   catalogKey: "aqb9-catalog-v1",
   filesKey: "aqb9-files-v1",
   openedLinksKey: "aqb9-opened-file-links-v1",
-  build: "2026.08.23.10"
+  build: "2026.08.23.11"
 };
 
 const state = { subjects: [], files: [], subject: null, target: null, settings: { global_code_price: 0, whatsapp_phone: "" }, cache: readCache() };
