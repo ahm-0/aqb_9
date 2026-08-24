@@ -7,10 +7,11 @@
 :root[data-theme="dark"] .reference-global-code { border-color: #28272f; background: linear-gradient(135deg, #101014, #0b0b0e); color: #f0eff8; box-shadow: 0 10px 25px rgba(0,0,0,.24); }
 :root[data-theme="dark"] .reference-global-code .reference-global-icon { background: linear-gradient(135deg, #795fff, #4e3fe0); color: #fff; box-shadow: 0 8px 18px rgba(96,75,237,.28); }
 :root[data-theme="dark"] .reference-global-code small { color: #9896a7; }
-:root[data-theme="dark"] .reference-card, :root[data-theme="dark"] .reference-empty { border-color: #25252c; background: linear-gradient(135deg, #101014, #0b0b0e); box-shadow: 0 9px 20px rgba(0,0,0,.26); }
+:root[data-theme="dark"] .reference-card, :root[data-theme="dark"] .reference-empty { border-color: #272430; background: linear-gradient(135deg, #111116, #0a0a0d); box-shadow: 0 9px 20px rgba(0,0,0,.30); }
 :root[data-theme="dark"] .reference-card b { color: #f8f7fc; }
-:root[data-theme="dark"] .reference-card .reference-card-icon { background: linear-gradient(135deg, #775cff, #4c3ad7); color: #fff; box-shadow: 0 9px 19px rgba(97,75,235,.23); }
+:root[data-theme="dark"] .reference-card .reference-card-icon { background: linear-gradient(135deg, var(--from), var(--to)); color: #fff; box-shadow: 0 9px 19px color-mix(in srgb, var(--from) 28%, transparent); }
 :root[data-theme="dark"] .reference-card .reference-card-arrow { border-color: #23232b; background: #17171d; color: #9b8dff; }
+:root[data-theme="dark"] .vip-badge { border-color: rgba(167, 139, 250, .28); background: linear-gradient(135deg, rgba(124, 58, 237, .24), rgba(99, 102, 241, .18)); color: #d8ceff; }
 :root[data-theme="dark"] .reference-back { color: #b1a7ff; }
 :root[data-theme="dark"] .access-dialog { border-color: #2c2c35; color: #f7f6fb; background: linear-gradient(160deg, #15151b 0%, #0d0d11 100%) !important; box-shadow: 0 -24px 74px rgba(0,0,0,.72); }
 :root[data-theme="dark"] .access-dialog .sheet-handle { background: #4a4955; }

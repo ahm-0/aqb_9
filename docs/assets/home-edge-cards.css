@@ -5,12 +5,9 @@
   max-width: none;
   padding-inline: 8px;
 }
-.reference-hero,
-.reference-global-code,
-.reference-card,
-.reference-empty {
-  border-radius: 14px;
-}
+.reference-hero { border-radius: 28px; }
+.reference-global-code { border-radius: 18px; }
+.reference-card, .reference-empty { border-radius: 22px; }
 #subjects-list,
 #files-list {
   width: 100%;
@@ -19,8 +16,17 @@
 }
 #subjects-list > .reference-card + .reference-card,
 #files-list > .reference-card + .reference-card { margin-top: 12px; }
-#files-list .reference-card { padding-inline: 18px; }
+.reference-card { padding: 12px; gap: 12px; border-color: #e8e7ef; background: #fff; box-shadow: 0 7px 20px rgba(42, 35, 90, .055); }
+.reference-card .reference-card-icon { width: 48px; height: 48px; flex-basis: 48px; border-radius: 16px; font-size: 22px; background: linear-gradient(135deg, var(--from), var(--to)); box-shadow: 0 6px 16px color-mix(in srgb, var(--from) 26%, transparent); }
+.reference-card .reference-card-arrow { width: 36px; height: 36px; flex-basis: 36px; border-radius: 12px; font-size: 24px; color: var(--from); background: color-mix(in srgb, var(--from) 10%, transparent); }
+.reference-card .reference-card-copy { gap: 4px; }
+.reference-card b { font-size: 14px; }
+.reference-card small { font-size: 11px; }
+.file-title-row { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.file-title-row b { min-width: 0; flex: 1; }
+.vip-badge { flex: 0 0 auto; padding: 3px 7px; border: 1px solid rgba(124, 58, 237, .22); border-radius: 999px; background: linear-gradient(135deg, rgba(124, 58, 237, .12), rgba(99, 102, 241, .12)); color: #6d28d9; font-family: Cairo, sans-serif; font-size: 9px; font-style: normal; font-weight: 800; letter-spacing: .07em; line-height: 1.2; }
+#files-list .reference-card { padding-inline: 14px; }
 
 @media (min-width: 521px) {
-  #files-list .reference-card { padding-inline: 26px; }
+  #files-list .reference-card { padding-inline: 20px; }
 }
