@@ -14,6 +14,7 @@
   margin-inline: 0;
   gap: 0;
 }
+#files-list { margin-top: 16px; }
 #subjects-list > .reference-card + .reference-card,
 #files-list > .reference-card + .reference-card { margin-top: 12px; }
 .reference-card { padding: 12px; gap: 12px; border-color: #e8e7ef; background: #fff; box-shadow: 0 7px 20px rgba(42, 35, 90, .055); }
