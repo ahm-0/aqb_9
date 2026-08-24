@@ -6,7 +6,7 @@ const AQB9 = {
   catalogKey: "aqb9-catalog-v1",
   filesKey: "aqb9-files-v1",
   openedLinksKey: "aqb9-opened-file-links-v1",
-  build: "2026.08.23.13"
+  build: "2026.08.23.14"
 };
 
 const state = { subjects: [], files: [], subject: null, target: null, settings: { global_code_price: 0, whatsapp_phone: "" }, cache: readCache() };
@@ -118,7 +118,8 @@ function updateCodeContact() {
   const item = global ? { name: "كود الوصول الشامل", price: state.settings.global_code_price, phone: state.settings.whatsapp_phone } : state.target || {};
   const phone = phoneNumber(item.phone || item.whatsapp_phone); title.textContent = `لشراء ${item.name || "كود الوصول"}`; price.textContent = formatPrice(item.price); contact.hidden = false;
   if (!phone) { contact.href = "#"; contact.target = "_self"; contact.setAttribute("aria-disabled", "true"); contact.onclick = (event) => { event.preventDefault(); toast("رقم واتساب غير مضاف بعد في الإعدادات.", true); }; return; }
-  contact.href = `https://wa.me/${phone}?text=${encodeURIComponent(`مرحباً، أريد شراء ${item.name || "كود الوصول"} للصف التاسع.`)}`; contact.target = "_blank"; contact.removeAttribute("aria-disabled"); contact.onclick = null;
+  const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(`مرحباً، أريد شراء ${item.name || "كود الوصول"} للصف التاسع.`)}`;
+  contact.href = whatsappUrl; contact.target = "_blank"; contact.removeAttribute("aria-disabled"); contact.onclick = (event) => { event.preventDefault(); if (window.AppBridge?.openExternalUrl) return window.AppBridge.openExternalUrl(whatsappUrl); window.open(whatsappUrl, "_blank", "noopener"); };
 }
 
 function closeCodeDialog(fromHistory = false) { const dialog = $("#code-dialog"); if (!dialog.open) return; dialog.close(); if (codeDialogHistoryOpen && !fromHistory) { skipCodeDialogPop = true; codeDialogHistoryOpen = false; history.back(); return; } codeDialogHistoryOpen = false; }
