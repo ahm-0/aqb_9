@@ -6,7 +6,7 @@ const AQB9 = {
   catalogKey: "aqb9-catalog-v1",
   filesKey: "aqb9-files-v1",
   openedLinksKey: "aqb9-opened-file-links-v1",
-  build: "2026.08.23.11"
+  build: "2026.08.23.12"
 };
 
 const state = { subjects: [], files: [], subject: null, target: null, settings: { global_code_price: 0, whatsapp_phone: "" }, cache: readCache() };
@@ -57,7 +57,7 @@ function registerOfflineSupport() { if (!("serviceWorker" in navigator)) return;
 async function rpc(name, args = {}) { const response = await fetch(`${AQB9.url}/rest/v1/rpc/${name}`, { method: "POST", headers: { apikey: AQB9.key, Authorization: `Bearer ${AQB9.key}`, "Content-Type": "application/json" }, body: JSON.stringify(args) }); const data = await response.json().catch(() => null); if (!response.ok) throw new Error(data?.message || "تعذر إتمام الطلب."); return data; }
 
 function directDriveUrl(raw) { try { const url = new URL(raw); const id = url.pathname.match(/\/(?:file|document|presentation|spreadsheets)\/d\/([^/?#]+)/)?.[1] || url.searchParams.get("id"); const isGoogleDrive = url.hostname.endsWith("drive.google.com") || url.hostname.endsWith("docs.google.com"); return isGoogleDrive && id ? `https://drive.google.com/uc?id=${encodeURIComponent(id)}&export=download&confirm=t` : raw; } catch { return raw; } }
-function openViewer(raw, title) { const url = directDriveUrl(raw); if (window.Android?.openNativePdfViewer) return window.Android.openNativePdfViewer(url, title, true); if (window.AppBridge?.openNativePdfViewer) return window.AppBridge.openNativePdfViewer(url, title, true); if (window.AppBridge?.openPdfViewer) return window.AppBridge.openPdfViewer(url, title); if (window.AppBridge?.openExternalUrl) return window.AppBridge.openExternalUrl(url); window.open(url, "_blank", "noopener"); }
+function openViewer(raw, title) { const url = directDriveUrl(raw); if (window.AppBridge?.openPdfViewer) return window.AppBridge.openPdfViewer(url, title, true); if (window.AppBridge?.openExternalUrl) return window.AppBridge.openExternalUrl(url); window.open(url, "_blank", "noopener"); }
 function openAuthorizedFile(file) { if (!file?.drive_url) return; rememberOpenedFile(file); openViewer(file.drive_url, file.title); }
 
 function setStatus(message) { $("#app-status").textContent = message; $("#app-status").hidden = false; $("#subjects-list").hidden = true; $("#files-list").hidden = true; }
