@@ -24,6 +24,14 @@
     byId("admin-edit-eyebrow").textContent = type === "subject" ? "تعديل مادة" : "تعديل ملف";
     byId("admin-edit-title").textContent = record.name || record.title;
     byId("admin-edit-fields").innerHTML = type === "subject" ? subjectFields(record) : fileFields(record);
+    if (type === "file" && !dialog.querySelector('input[name="cover"]')) {
+      const driveLabel = dialog.querySelector('input[name="drive"]')?.closest("label");
+      if (driveLabel) {
+        const coverLabel = document.createElement("label");
+        coverLabel.innerHTML = `رابط صورة معاينة الملف <small>اختياري للملفات القديمة</small><input name="cover" type="url" inputmode="url" value="${escapeHtml(record.cover_url || "")}" placeholder="https://example.com/file-preview.jpg">`;
+        driveLabel.insertAdjacentElement("beforebegin", coverLabel);
+      }
+    }
     const iconSelect = dialog.querySelector('select[name="icon"]');
     if (iconSelect) iconSelect.value = record.icon_key || "book-open";
     byId("admin-edit-error").textContent = "";
@@ -37,8 +45,10 @@
           await rpc("admin_update_ninth_subject", { p_id: record.id, p_name: safeText(values.get("name")), p_slug: record.slug, p_description: safeText(values.get("description")), p_icon_key: values.get("icon"), p_color_from: values.get("from"), p_color_to: values.get("to"), p_sort_order: Number(values.get("sort") || 0), p_is_active: values.has("active") });
         } else {
           const driveUrl = safeText(values.get("drive"));
+          const coverUrl = safeText(values.get("cover"));
           if (!/^https:\/\//i.test(driveUrl)) throw new Error("أضف رابط Google Drive صحيحاً يبدأ بـ https://");
-          await rpc("admin_update_ninth_file", { p_id: record.id, p_subject_id: values.get("subject"), p_title: safeText(values.get("title")), p_description: safeText(values.get("description")), p_cover_url: null, p_drive_url: driveUrl, p_price: Number(values.get("price") || 0), p_whatsapp_phone: safeText(values.get("phone")), p_teacher_name: safeText(values.get("teacher")), p_sort_order: Number(values.get("sort") || 0), p_is_published: values.has("published") });
+          if (coverUrl && !/^https:\/\//i.test(coverUrl)) throw new Error("أضف رابط صورة صحيحاً يبدأ بـ https://");
+          await rpc("admin_update_ninth_file", { p_id: record.id, p_subject_id: values.get("subject"), p_title: safeText(values.get("title")), p_description: safeText(values.get("description")), p_cover_url: coverUrl || null, p_drive_url: driveUrl, p_price: Number(values.get("price") || 0), p_whatsapp_phone: safeText(values.get("phone")), p_teacher_name: safeText(values.get("teacher")), p_sort_order: Number(values.get("sort") || 0), p_is_published: values.has("published") });
         }
         dialog.close(); await refresh(type === "subject" ? "subjects" : "files"); toast("تم حفظ التعديل.");
       } catch (error) { byId("admin-edit-error").textContent = error.message || "تعذر حفظ التعديل."; }

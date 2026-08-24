@@ -58,18 +58,25 @@
     }, true);
   };
   const bindFile = (form) => {
+    const driveLabel = form.elements.drive?.closest("label");
+    if (driveLabel && !form.elements.cover) {
+      const coverLabel = document.createElement("label");
+      coverLabel.innerHTML = 'رابط صورة معاينة الملف <small>اختياري للملفات القديمة</small><input name="cover" type="url" inputmode="url" placeholder="https://example.com/file-preview.jpg">';
+      driveLabel.insertAdjacentElement("beforebegin", coverLabel);
+    }
     form.addEventListener("submit", async (event) => {
       event.preventDefault(); event.stopImmediatePropagation();
       const data = new FormData(form); const button = form.querySelector('button[type="submit"], button.primary-button');
-      const title = safeText(data.get("title")); const driveUrl = safeText(data.get("drive"));
+      const title = safeText(data.get("title")); const driveUrl = safeText(data.get("drive")); const coverUrl = safeText(data.get("cover"));
       if (!data.get("subject")) return toast("اختر المادة أولاً.", true);
       if (title.length < 2) return toast("اكتب عنوان الملف أولاً.", true);
       if (!/^https:\/\//i.test(driveUrl)) return toast("أضف رابط Google Drive صحيحاً يبدأ بـ https://", true);
+      if (coverUrl && !/^https:\/\//i.test(coverUrl)) return toast("أضف رابط صورة صحيحاً يبدأ بـ https://", true);
       toggleSaving(button, true, "＋ إضافة الملف");
       try {
         await rpc("admin_create_ninth_file", {
           p_subject_id: data.get("subject"), p_title: title, p_description: safeText(data.get("description")),
-          p_cover_url: null, p_drive_url: driveUrl, p_price: Number(data.get("price") || 0),
+          p_cover_url: coverUrl || null, p_drive_url: driveUrl, p_price: Number(data.get("price") || 0),
           p_whatsapp_phone: safeText(data.get("phone")), p_teacher_name: safeText(data.get("teacher")),
           p_sort_order: Number(data.get("sort") || 0), p_is_published: data.has("published")
         });

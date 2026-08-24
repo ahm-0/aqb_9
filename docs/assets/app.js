@@ -6,7 +6,7 @@ const AQB9 = {
   catalogKey: "aqb9-catalog-v1",
   filesKey: "aqb9-files-v1",
   openedLinksKey: "aqb9-opened-file-links-v1",
-  build: "2026.08.23.12"
+  build: "2026.08.23.13"
 };
 
 const state = { subjects: [], files: [], subject: null, target: null, settings: { global_code_price: 0, whatsapp_phone: "" }, cache: readCache() };
@@ -57,6 +57,7 @@ function registerOfflineSupport() { if (!("serviceWorker" in navigator)) return;
 async function rpc(name, args = {}) { const response = await fetch(`${AQB9.url}/rest/v1/rpc/${name}`, { method: "POST", headers: { apikey: AQB9.key, Authorization: `Bearer ${AQB9.key}`, "Content-Type": "application/json" }, body: JSON.stringify(args) }); const data = await response.json().catch(() => null); if (!response.ok) throw new Error(data?.message || "تعذر إتمام الطلب."); return data; }
 
 function directDriveUrl(raw) { try { const url = new URL(raw); const id = url.pathname.match(/\/(?:file|document|presentation|spreadsheets)\/d\/([^/?#]+)/)?.[1] || url.searchParams.get("id"); const isGoogleDrive = url.hostname.endsWith("drive.google.com") || url.hostname.endsWith("docs.google.com"); return isGoogleDrive && id ? `https://drive.google.com/uc?id=${encodeURIComponent(id)}&export=download&confirm=t` : raw; } catch { return raw; } }
+function safeCoverUrl(raw) { try { const url = new URL(String(raw || "")); return url.protocol === "https:" ? url.href : ""; } catch { return ""; } }
 function openViewer(raw, title) { const url = directDriveUrl(raw); if (window.AppBridge?.openPdfViewer) return window.AppBridge.openPdfViewer(url, title, true); if (window.AppBridge?.openExternalUrl) return window.AppBridge.openExternalUrl(url); window.open(url, "_blank", "noopener"); }
 function openAuthorizedFile(file) { if (!file?.drive_url) return; rememberOpenedFile(file); openViewer(file.drive_url, file.title); }
 
@@ -99,7 +100,7 @@ function renderFiles() {
   $("#app-status").hidden = true; root.hidden = false; $("#subjects-list").hidden = true;
   if (!files.length) { root.innerHTML = '<div class="reference-empty">لا توجد ملفات منشورة لهذه المادة</div>'; return; }
   const colors = featuredPalette(state.subject?.name);
-  root.innerHTML = files.map((file) => `<button class="reference-card file-card" style="--from:${colors.from};--to:${colors.to}" data-file="${file.id}"><span class="reference-card-icon">▤</span><span class="reference-card-copy"><span class="file-title-row"><b>${escapeHtml(file.title)}</b><em class="vip-badge">VIP</em></span><small>عرض تفاصيل الملف وفتحه</small></span><i class="reference-card-arrow">‹</i></button>`).join("");
+  root.innerHTML = files.map((file) => { const cover = safeCoverUrl(file.cover_url); const media = cover ? `<img src="${escapeHtml(cover)}" alt="معاينة ${escapeHtml(file.title)}" loading="lazy" referrerpolicy="no-referrer">` : `<span class="file-cover-placeholder" aria-hidden="true">▤</span>`; return `<article class="reference-card file-card" style="--from:${colors.from};--to:${colors.to}"><header class="file-card-head"><span class="file-title-row"><b>${escapeHtml(file.title)}</b><em class="vip-badge">VIP</em></span></header><div class="file-cover">${media}</div><footer class="file-card-footer"><button class="file-open-button" type="button" data-file="${file.id}" aria-label="فتح ملف ${escapeHtml(file.title)}">فتح الملف <span aria-hidden="true">←</span></button></footer></article>`; }).join("");
   root.querySelectorAll("[data-file]").forEach((button) => { button.onclick = () => requestAccess(button.dataset.file); });
 }
 

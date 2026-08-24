@@ -28,6 +28,22 @@
 .vip-badge { flex: 0 0 auto; padding: 3px 7px; border: 1px solid rgba(124, 58, 237, .22); border-radius: 999px; background: linear-gradient(135deg, rgba(124, 58, 237, .12), rgba(99, 102, 241, .12)); color: #6d28d9; font-family: Cairo, sans-serif; font-size: 9px; font-style: normal; font-weight: 800; letter-spacing: .07em; line-height: 1.2; }
 #files-list .reference-card { padding-inline: 14px; }
 
+/* بطاقات الملفات: عنوان ثم معاينة ثابتة ثم إجراء فتح واحد واضح. */
+#files-list .file-card { display: block; overflow: hidden; padding: 0; border-radius: 22px; background: #fff; }
+#files-list .file-card-head { display: flex; align-items: center; min-height: 58px; padding: 12px 14px; }
+#files-list .file-title-row { width: 100%; }
+#files-list .file-title-row b { color: #20202a; font-size: 15px; line-height: 1.55; white-space: normal; overflow: visible; text-overflow: clip; }
+#files-list .file-cover { position: relative; width: 100%; height: 190px; overflow: hidden; background: linear-gradient(135deg, color-mix(in srgb, var(--from) 18%, #f6f5fb), color-mix(in srgb, var(--to) 24%, #edecf8)); }
+#files-list .file-cover img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+#files-list .file-cover-placeholder { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-size: 48px; background: linear-gradient(135deg, var(--from), var(--to)); text-shadow: 0 8px 20px rgba(20, 18, 55, .22); }
+#files-list .file-card-footer { padding: 12px 14px 14px; border-top: 1px solid #efedf6; }
+#files-list .file-open-button { display: flex; align-items: center; justify-content: center; gap: 9px; width: 100%; min-height: 46px; border: 0; border-radius: 13px; padding: 10px 14px; color: #fff; background: linear-gradient(135deg, var(--from), var(--to)); box-shadow: 0 8px 17px color-mix(in srgb, var(--from) 23%, transparent); font-family: Cairo, sans-serif; font-size: 13px; font-weight: 800; }
+#files-list .file-open-button span { font-size: 18px; line-height: 1; }
+
 @media (min-width: 521px) {
   #files-list .reference-card { padding-inline: 20px; }
+  #files-list .file-card { max-width: 740px; margin-inline: auto; padding-inline: 0; }
+  #files-list .file-card-head { padding-inline: 18px; }
+  #files-list .file-cover { height: 260px; }
+  #files-list .file-card-footer { padding-inline: 18px; }
 }
