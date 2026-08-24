@@ -42,7 +42,7 @@
 
 @media (min-width: 521px) {
   #files-list .reference-card { padding-inline: 20px; }
-  #files-list .file-card { max-width: 740px; margin-inline: auto; padding-inline: 0; }
+  #files-list .file-card { max-width: none; margin-inline: 0; padding-inline: 0; }
   #files-list .file-card-head { padding-inline: 18px; }
   #files-list .file-cover { height: 260px; }
   #files-list .file-card-footer { padding-inline: 18px; }
