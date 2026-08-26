@@ -6,7 +6,7 @@ const AQB9 = {
   catalogKey: "aqb9-catalog-v1",
   filesKey: "aqb9-files-v1",
   openedLinksKey: "aqb9-opened-file-links-v1",
-  build: "2026.08.23.17"
+  build: "2026.08.23.18"
 };
 
 const state = { subjects: [], files: [], subject: null, target: null, settings: { global_code_price: 0, whatsapp_phone: "" }, cache: readCache() };
@@ -76,7 +76,7 @@ function resetToSubjects() { state.subject = null; state.files = []; renderSubje
 function renderSubjects() {
   const root = $("#subjects-list");
   $("#app-status").hidden = true; root.hidden = false; $("#files-list").hidden = true;
-  $("#reference-hero").classList.remove("is-files"); $("#open-global-code").classList.remove("hidden"); setHero("الصف التاسع", "اختر المادة لعرض الملفات"); applyHeroPalette();
+  $("#reference-hero").classList.remove("is-files"); $("#open-global-code").classList.remove("hidden"); setHero("الصف التاسع", "اختر المادة لعرض الملفات"); showAndroidId(); applyHeroPalette();
   if (!state.subjects.length) { root.innerHTML = '<div class="reference-empty">لا توجد مواد منشورة حالياً</div>'; return; }
   root.innerHTML = state.subjects.map((subject) => { const colors = featuredPalette(subject.name); return `<button class="reference-card" style="--from:${colors.from};--to:${colors.to}" data-subject="${subject.id}"><span class="reference-card-icon">${icon(subject.icon_key, subject.name)}</span><span class="reference-card-copy"><b>${escapeHtml(subject.name)}</b><small>ملفات حصرية</small></span><i class="reference-card-arrow">‹</i></button>`; }).join("");
   root.querySelectorAll("[data-subject]").forEach((button) => { button.onclick = () => openSubject(button.dataset.subject); });
@@ -86,6 +86,7 @@ async function openSubject(id, pushHistory = true) {
   const subject = state.subjects.find((item) => item.id === id); if (!subject) return;
   state.subject = subject;
   if (pushHistory) history.pushState({ aqb9Subject: id }, "", `${location.pathname}${location.search}#subject=${encodeURIComponent(id)}`);
+  $("#android-id-badge").hidden = true;
   $("#open-global-code").classList.add("hidden"); setHero(subject.name, "ملفات حصرية متاحة"); applyHeroPalette(subject.name);
   const localFiles = cachedSubjectFiles(id);
   if (localFiles !== null) { state.files = localFiles; renderFiles(); setSyncStatus("جارٍ تحديث ملفات المادة…", "sync", 5000); }
