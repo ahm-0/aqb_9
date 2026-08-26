@@ -6,7 +6,7 @@ const AQB9 = {
   catalogKey: "aqb9-catalog-v1",
   filesKey: "aqb9-files-v1",
   openedLinksKey: "aqb9-opened-file-links-v1",
-  build: "2026.08.23.15"
+  build: "2026.08.23.16"
 };
 
 const state = { subjects: [], files: [], subject: null, target: null, settings: { global_code_price: 0, whatsapp_phone: "" }, cache: readCache() };
@@ -51,6 +51,14 @@ function removeSplashAfterDelay() {
   };
   const schedule = () => window.setTimeout(tryRemove, 1000);
   if (document.readyState === "complete") schedule(); else window.addEventListener("load", schedule, { once: true });
+}
+
+function showAndroidId() {
+  const badge = $("#android-id-badge"); if (!badge) return;
+  let androidId = "";
+  try { androidId = String(window.AppBridge?.getAndroidId?.() || "").trim(); } catch {}
+  if (!androidId) { badge.hidden = true; return; }
+  badge.textContent = `Android ID: ${androidId}`; badge.hidden = false;
 }
 
 function registerOfflineSupport() { if (!("serviceWorker" in navigator)) return; navigator.serviceWorker.register(`sw.js?build=${AQB9.build}`, { scope: "./" }).then((registration) => registration.update()).catch(() => {}); }
@@ -180,4 +188,4 @@ $("#code-form").onsubmit = async (event) => { event.preventDefault(); const butt
 window.addEventListener("popstate", (event) => { if (skipCodeDialogPop) { skipCodeDialogPop = false; return; } if ($("#code-dialog").open) { closeCodeDialog(true); return; } const id = event.state?.aqb9Subject; if (id) openSubject(id, false); else if (state.subject) resetToSubjects(); });
 window.addEventListener("online", () => refreshCatalog());
 window.addEventListener("offline", () => setSyncStatus("تم الانتقال إلى النسخة المحفوظة دون إنترنت.", "offline", 4500));
-removeSplashAfterDelay(); registerOfflineSupport(); load();
+showAndroidId(); removeSplashAfterDelay(); registerOfflineSupport(); load();
