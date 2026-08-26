@@ -6,7 +6,6 @@
   padding-inline: 8px;
 }
 .reference-hero { border-radius: 28px; }
-.android-id-badge { position: absolute; inset-block-start: 11px; inset-inline-end: 12px; max-width: calc(100% - 24px); overflow: hidden; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; padding: 4px 8px; color: rgba(255,255,255,.96); background: rgba(22,20,72,.18); box-shadow: 0 4px 11px rgba(25,18,89,.12); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; font-weight: 800; letter-spacing: .025em; line-height: 1.25; text-overflow: ellipsis; white-space: nowrap; }
 .reference-global-code { border-radius: 18px; }
 .reference-card, .reference-empty { border-radius: 22px; }
 #subjects-list,
