@@ -6,13 +6,15 @@ const AQB9 = {
   catalogKey: "aqb9-catalog-v1",
   filesKey: "aqb9-files-v1",
   openedLinksKey: "aqb9-opened-file-links-v1",
-  build: "2026.08.23.19"
+  grantsKey: "aqb9-file-access-grants-v1",
+  build: "2026.08.23.20"
 };
 
 const state = { subjects: [], files: [], subject: null, target: null, settings: { global_code_price: 0, whatsapp_phone: "" }, cache: readCache() };
 let codeDialogHistoryOpen = false;
 let skipCodeDialogPop = false;
 let syncTimer = 0;
+let accessRefreshPromise = null;
 const $ = (selector) => document.querySelector(selector);
 
 function readStore(key, fallback = {}) { try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); } catch { return fallback; } }
@@ -26,6 +28,10 @@ function cachedSubjectFiles(id) { const all = readStore(AQB9.filesKey, {}); retu
 function readOpenedLinks() { return readStore(AQB9.openedLinksKey, {}); }
 function rememberOpenedFile(file) { if (!file?.id || !file?.drive_url) return; const links = readOpenedLinks(); links[file.id] = { drive_url: file.drive_url, title: file.title || "ملف", saved_at: new Date().toISOString() }; writeStore(AQB9.openedLinksKey, links); }
 function rememberedFile(id) { return readOpenedLinks()[id] || null; }
+function readAccessGrants() { const grants = readStore(AQB9.grantsKey, []); return Array.isArray(grants) ? grants.filter((grant) => /^[0-9a-f-]{36}$/i.test(String(grant?.token || ""))) : []; }
+function saveAccessGrants(grants) { writeStore(AQB9.grantsKey, grants); }
+function saveAuthorizedFiles(files) { const links = readOpenedLinks(); (files || []).forEach((file) => { if (!file?.id || !file?.drive_url) return; state.cache[file.id] = file; links[file.id] = { drive_url: file.drive_url, title: file.title || "ملف", saved_at: new Date().toISOString() }; }); saveCache(); writeStore(AQB9.openedLinksKey, links); }
+function saveAccessGrant(data) { const token = String(data?.grant_token || "").trim(); if (!/^[0-9a-f-]{36}$/i.test(token)) return; const grants = readAccessGrants().filter((grant) => grant.token !== token); grants.push({ token, scope: data.scope === "grade9" ? "grade9" : "file", file_ids: (data.files || []).map((file) => file?.id).filter(Boolean), saved_at: new Date().toISOString() }); saveAccessGrants(grants.slice(-8)); }
 function escapeHtml(value) { return String(value || "").replace(/[&<>'"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]); }
 function icon(key, name) { const lookup = { calculator: "⌗", atom: "⚛", flask: "⚗", leaf: "♧", bookopen: "▤", "book-open": "▤" }; return lookup[String(key || "").toLowerCase()] || (String(name).includes("رياض") ? "◢" : "▤"); }
 function featuredPalette(name = "") { const text = String(name); const palette = [[/رياض/, "#3B82F6", "#6366F1"], [/فيز/, "#8B5CF6", "#A855F7"], [/كيمي/, "#10B981", "#059669"], [/أحي/, "#F59E0B", "#D97706"], [/عرب/, "#EF4444", "#DC2626"], [/إنج|انج/, "#0EA5E9", "#0284C7"], [/فلس/, "#A855F7", "#7C3AED"], [/تاريخ/, "#F97316", "#EA580C"], [/جغرا/, "#14B8A6", "#0D9488"]]; const found = palette.find(([pattern]) => pattern.test(text)); return found ? { from: found[1], to: found[2] } : { from: "#6366F1", to: "#7C3AED" }; }
@@ -60,6 +66,29 @@ function directDriveUrl(raw) { try { const url = new URL(raw); const id = url.pa
 function safeCoverUrl(raw) { try { const url = new URL(String(raw || "")); return url.protocol === "https:" ? url.href : ""; } catch { return ""; } }
 function openViewer(raw, title) { const url = directDriveUrl(raw); if (window.AppBridge?.openPdfViewer) return window.AppBridge.openPdfViewer(url, title, true); if (window.AppBridge?.openExternalUrl) return window.AppBridge.openExternalUrl(url); window.open(url, "_blank", "noopener"); }
 function openAuthorizedFile(file) { if (!file?.drive_url) return; rememberOpenedFile(file); openViewer(file.drive_url, file.title); }
+async function refreshAuthorizedFiles(fileId = null) {
+  if (accessRefreshPromise) return accessRefreshPromise;
+  const grants = readAccessGrants().filter((grant) => !fileId || grant.scope === "grade9" || grant.file_ids.includes(fileId));
+  if (!navigator.onLine || !grants.length) return false;
+  accessRefreshPromise = Promise.allSettled(grants.map((grant) => rpc("refresh_ninth_access_files", { p_grant_token: grant.token })))
+    .then((results) => {
+      let updated = false;
+      const refreshedGrants = grants.map((grant, index) => {
+        const data = results[index]?.status === "fulfilled" ? results[index].value : null;
+        if (!Array.isArray(data?.files)) return grant;
+        saveAuthorizedFiles(data.files); updated = true;
+        return { ...grant, scope: data.scope === "grade9" ? "grade9" : "file", file_ids: data.files.map((file) => file?.id).filter(Boolean), refreshed_at: new Date().toISOString() };
+      });
+      if (updated) {
+        const byToken = new Map(refreshedGrants.map((grant) => [grant.token, grant]));
+        saveAccessGrants(readAccessGrants().map((grant) => byToken.get(grant.token) || grant));
+      }
+      return updated;
+    })
+    .catch(() => false)
+    .finally(() => { accessRefreshPromise = null; });
+  return accessRefreshPromise;
+}
 
 function setStatus(message) { $("#app-status").textContent = message; $("#app-status").hidden = false; $("#subjects-list").hidden = true; $("#files-list").hidden = true; }
 function setHero(title, subtitle) { $("#hero-title").textContent = title; $("#hero-subtitle").textContent = subtitle; }
@@ -101,13 +130,20 @@ function renderFiles() {
   if (!files.length) { root.innerHTML = '<div class="reference-empty">لا توجد ملفات منشورة لهذه المادة</div>'; return; }
   const colors = featuredPalette(state.subject?.name);
   root.innerHTML = files.map((file) => { const cover = safeCoverUrl(file.cover_url); const media = cover ? `<img src="${escapeHtml(cover)}" alt="معاينة ${escapeHtml(file.title)}" loading="lazy" referrerpolicy="no-referrer">` : `<span class="file-cover-placeholder" aria-hidden="true">▤</span>`; return `<article class="reference-card file-card" style="--from:${colors.from};--to:${colors.to}"><header class="file-card-head"><span class="file-title-row"><b>${escapeHtml(file.title)}</b><em class="vip-badge">VIP</em></span></header><div class="file-cover">${media}</div><footer class="file-card-footer"><button class="file-open-button" type="button" data-file="${file.id}" aria-label="فتح ملف ${escapeHtml(file.title)}">فتح الملف <span aria-hidden="true">←</span></button></footer></article>`; }).join("");
-  root.querySelectorAll("[data-file]").forEach((button) => { button.onclick = () => requestAccess(button.dataset.file); });
+  root.querySelectorAll("[data-file]").forEach((button) => { button.onclick = () => { requestAccess(button.dataset.file, button).catch(() => {}); }; });
 }
 
-function requestAccess(id) {
+async function requestAccess(id, button = null) {
   const file = state.files.find((item) => item.id === id); if (!file) return;
   const unlocked = state.cache[id] || rememberedFile(id);
-  if (unlocked?.drive_url) { openAuthorizedFile({ id, drive_url: unlocked.drive_url, title: unlocked.title || file.title }); return; }
+  if (unlocked?.drive_url) {
+    if (navigator.onLine) {
+      if (button) { button.disabled = true; button.setAttribute("aria-busy", "true"); }
+      try { await refreshAuthorizedFiles(id); } finally { if (button) { button.disabled = false; button.removeAttribute("aria-busy"); } }
+    }
+    const newest = state.cache[id] || rememberedFile(id) || unlocked;
+    openAuthorizedFile({ id, drive_url: newest.drive_url, title: newest.title || file.title }); return;
+  }
   state.target = file; showDialog(`كود الوصول إلى ${file.title}`);
 }
 
@@ -134,7 +170,7 @@ function showDialog(title) {
 async function redeem(code) {
   const data = await rpc("redeem_ninth_access_code", { p_code: code }); const files = data?.files || [];
   if (!files.length) throw new Error("لا توجد ملفات متاحة لهذا الكود.");
-  files.forEach((file) => { state.cache[file.id] = file; }); saveCache(); closeCodeDialog();
+  saveAuthorizedFiles(files); saveAccessGrant(data); closeCodeDialog();
   if (state.target && state.target !== "global") { const active = state.cache[state.target.id]; if (active) openAuthorizedFile(active); }
   else toast(`تم تفعيل ${files.length} ملفاً.`);
   if (state.subject) renderFiles();
@@ -152,7 +188,7 @@ async function refreshCatalog() {
   if (hadCachedContent) setSyncStatus("جارٍ تحديث البيانات…", "sync", 5000);
   try {
     const [subjects, settings] = await Promise.all([rpc("list_ninth_subjects"), rpc("get_ninth_settings")]);
-    state.subjects = subjects || []; state.settings = settings?.[0] || state.settings; saveCatalog();
+    state.subjects = subjects || []; state.settings = settings?.[0] || state.settings; saveCatalog(); await refreshAuthorizedFiles();
     if (state.subject) {
       const subjectId = state.subject.id; const refreshedSubject = state.subjects.find((item) => item.id === subjectId);
       if (refreshedSubject) { state.subject = refreshedSubject; await openSubject(subjectId, false); }
