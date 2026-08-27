@@ -7,7 +7,7 @@ const AQB9 = {
   filesKey: "aqb9-files-v1",
   openedLinksKey: "aqb9-opened-file-links-v1",
   grantsKey: "aqb9-file-access-grants-v1",
-  build: "2026.08.23.20"
+  build: "2026.08.23.21"
 };
 
 const state = { subjects: [], files: [], subject: null, target: null, settings: { global_code_price: 0, whatsapp_phone: "" }, cache: readCache() };
