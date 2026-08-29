@@ -191,7 +191,12 @@ function updateCodeContact() {
 function closeCodeDialog(fromHistory = false) { const dialog = $("#code-dialog"); if (!dialog.open) return; dialog.close(); if (codeDialogHistoryOpen && !fromHistory) { skipCodeDialogPop = true; codeDialogHistoryOpen = false; history.back(); return; } codeDialogHistoryOpen = false; }
 function showDialog(title) {
   const dialog = $("#code-dialog"); const global = state.target === "global";
-  $("#code-target").textContent = title; $("#code-dialog-description").textContent = global ? "يفتح جميع ملفات الصف التاسع" : "أدخل الكود لفتح هذا الملف."; $("#verify-code").innerHTML = `${global ? "تفعيل الوصول الشامل" : "تفعيل الوصول"} <span aria-hidden="true">◎</span>`;
+  dialog.dataset.scope = global ? "global" : "single";
+  const scopeLabel = $("#code-scope-label");
+  if (scopeLabel) scopeLabel.textContent = global ? "وصول شامل" : "وصول فردي";
+  $("#code-target").textContent = title;
+  $("#code-dialog-description").textContent = global ? "كود واحد يفتح لك مكتبة الصف التاسع كاملة." : `أدخل الكود لفتح ${state.target?.title || "هذا الملف"} مباشرة.`;
+  $("#verify-code").innerHTML = `${global ? "تفعيل الوصول الشامل" : "تفعيل الوصول"} <span aria-hidden="true">◎</span>`;
   $("#access-code").value = ""; $("#code-error").textContent = ""; updateCodeContact();
   if (!dialog.open) { history.pushState({ ...history.state, aqb9Dialog: "access-code" }, "", `${location.pathname}${location.search}${location.hash}`); codeDialogHistoryOpen = true; dialog.showModal(); }
   $("#close-code-dialog").focus({ preventScroll: true });

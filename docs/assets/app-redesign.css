@@ -47,8 +47,8 @@ body.reference-page {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: 52px;
-  margin-bottom: 22px;
+  min-height: 40px;
+  margin-bottom: 14px;
 }
 
 .app-brand {
@@ -60,19 +60,19 @@ body.reference-page {
 
 .app-brand-mark {
   display: grid;
-  width: 45px;
-  height: 45px;
-  flex: 0 0 45px;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
   place-items: center;
   border: 1px solid rgba(255, 255, 255, .82);
-  border-radius: 15px;
+  border-radius: 12px;
   background: linear-gradient(145deg, #fff, #eef0ff);
-  box-shadow: 0 9px 20px rgba(67, 71, 171, .15);
+  box-shadow: 0 6px 14px rgba(67, 71, 171, .13);
 }
 
 .app-brand-mark img {
-  width: 34px;
-  height: 34px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
 
@@ -87,7 +87,7 @@ body.reference-page {
   overflow: hidden;
   color: var(--app-ink);
   font-family: Cairo, sans-serif;
-  font-size: 15px;
+  font-size: 13px;
   letter-spacing: -.04em;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -96,7 +96,7 @@ body.reference-page {
 .app-brand-copy small {
   overflow: hidden;
   color: var(--app-muted);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -112,7 +112,7 @@ body.reference-page {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 9px;
+  padding: 6px 8px;
   border: 1px solid rgba(34, 199, 189, .16);
   border-radius: 999px;
   color: #168e86;
@@ -142,15 +142,15 @@ body.reference-page {
 
 .app-icon-button {
   display: grid;
-  width: 39px;
-  height: 39px;
+  width: 34px;
+  height: 34px;
   place-items: center;
   border: 1px solid var(--app-line);
   border-radius: 13px;
   color: var(--app-primary);
   background: rgba(255, 255, 255, .75);
   box-shadow: 0 5px 13px rgba(36, 43, 95, .05);
-  font-size: 21px;
+  font-size: 19px;
   line-height: 1;
   transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
 }
@@ -628,6 +628,242 @@ body.reference-page {
   animation: app-sheet-in 320ms cubic-bezier(.2, .8, .2, 1) both;
 }
 
+.access-dialog-content {
+  gap: 0;
+}
+
+.dialog-topline {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 1px 0 10px;
+}
+
+.dialog-scope-label,
+.dialog-secure {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.dialog-scope-label {
+  color: var(--app-primary-deep);
+  background: rgba(91, 92, 232, .1);
+}
+
+.dialog-secure {
+  color: #178e7f;
+  background: rgba(34, 199, 189, .09);
+}
+
+.dialog-secure i {
+  display: grid;
+  width: 14px;
+  height: 14px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--app-cyan);
+  font-size: 8px;
+  font-style: normal;
+}
+
+.access-dialog .dialog-mark {
+  width: 70px;
+  height: 70px;
+  margin: 12px 0 13px;
+  border-radius: 22px;
+  box-shadow: 0 15px 28px rgba(84, 67, 231, .23);
+}
+
+.access-dialog .dialog-mark span {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+}
+
+.access-dialog .dialog-copy {
+  gap: 4px;
+  max-width: calc(100% - 34px);
+}
+
+.access-dialog .dialog-copy h2 {
+  font-size: clamp(21px, 5vw, 27px);
+}
+
+.access-dialog .dialog-copy p {
+  max-width: 360px;
+  line-height: 1.75;
+}
+
+.dialog-perks {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 18px 0 19px;
+}
+
+.dialog-perks > span {
+  display: grid;
+  grid-template-columns: 25px 1fr;
+  align-items: center;
+  column-gap: 7px;
+  padding: 9px 10px;
+  border: 1px solid var(--app-line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .54);
+  text-align: right;
+}
+
+.dialog-perks i {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  grid-row: span 2;
+  place-items: center;
+  border-radius: 9px;
+  color: var(--app-primary);
+  background: var(--app-soft);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.dialog-perks b {
+  color: var(--app-ink);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.dialog-perks small {
+  color: var(--app-muted);
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.access-dialog form {
+  gap: 8px;
+}
+
+.code-field-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  color: var(--app-ink);
+  font-size: 12px;
+  font-weight: 900;
+  text-align: right;
+}
+
+.code-field-label small {
+  color: var(--app-muted);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.access-dialog .access-code-input {
+  min-height: 61px;
+  border-color: rgba(91, 92, 232, .13);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(40, 37, 87, .05);
+}
+
+.access-dialog .access-code-input > span {
+  width: 31px;
+  height: 31px;
+  border-radius: 10px;
+}
+
+.access-dialog #access-code {
+  height: 57px;
+  font-size: 16px;
+}
+
+.code-input-hint {
+  width: 100%;
+  margin-top: -1px;
+  color: var(--app-muted);
+  font-size: 9px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.code-input-hint b {
+  color: var(--app-primary);
+  direction: ltr;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+}
+
+.access-dialog .primary-button {
+  min-height: 57px;
+  margin-top: 5px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #696bf1, #4f4fd6);
+  font-size: 14px;
+  box-shadow: 0 13px 24px rgba(79, 63, 206, .2);
+  transition: transform 180ms ease, filter 180ms ease, box-shadow 180ms ease;
+}
+
+.access-dialog .primary-button:hover,
+.access-dialog .primary-button:focus-visible {
+  box-shadow: 0 16px 27px rgba(79, 63, 206, .28);
+  filter: brightness(1.05);
+  outline: none;
+}
+
+.access-dialog[data-scope="single"] .dialog-mark {
+  background: linear-gradient(145deg, #18afa7, #13877f);
+  border-color: rgba(34, 199, 189, .7);
+  box-shadow: 0 15px 28px rgba(23, 147, 137, .21);
+}
+
+.access-dialog[data-scope="single"] .dialog-scope-label {
+  color: #148d85;
+  background: rgba(34, 199, 189, .11);
+}
+
+.access-dialog[data-scope="single"] .primary-button {
+  background: linear-gradient(135deg, #19b9ae, #118d84);
+  box-shadow: 0 13px 24px rgba(16, 143, 133, .2);
+}
+
+:root[data-theme="dark"] .dialog-perks > span {
+  background: rgba(255, 255, 255, .025);
+}
+
+:root[data-theme="dark"] .dialog-perks b,
+:root[data-theme="dark"] .code-field-label {
+  color: var(--app-ink);
+}
+
+:root[data-theme="dark"] .dialog-scope-label {
+  color: #b7b0ff;
+  background: rgba(121, 105, 255, .15);
+}
+
+:root[data-theme="dark"] .dialog-secure {
+  color: #77dfd2;
+  background: rgba(34, 199, 189, .11);
+}
+
+:root[data-theme="dark"] .access-dialog .access-code-input {
+  border-color: rgba(153, 146, 255, .19);
+}
+
+:root[data-theme="dark"] .code-input-hint b {
+  color: #aaa5ff;
+}
+
 @keyframes app-card-in {
   from { opacity: 0; transform: translateY(10px) scale(.985); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -804,5 +1040,23 @@ body.reference-page {
 
   .reference-global-code b {
     font-size: 12px;
+  }
+}
+
+@media (max-width: 520px) {
+  .app-topbar {
+    margin-bottom: 12px;
+  }
+
+  .app-brand-copy small {
+    display: none;
+  }
+
+  .app-brand-copy b {
+    font-size: 13px;
+  }
+
+  .connection-pill {
+    min-height: 27px;
   }
 }
