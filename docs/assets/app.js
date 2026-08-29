@@ -49,6 +49,13 @@ function setSyncStatus(message, type = "sync", hideAfter = 0) {
   if (hideAfter) syncTimer = window.setTimeout(() => { bar.hidden = true; }, hideAfter);
 }
 function hideSyncStatus() { clearTimeout(syncTimer); const bar = $("#sync-status"); if (bar) bar.hidden = true; }
+function setConnectionStatus(online = navigator.onLine) {
+  const pill = document.querySelector(".connection-pill");
+  if (!pill) return;
+  pill.classList.toggle("is-offline", !online);
+  const label = pill.querySelector("span");
+  if (label) label.textContent = online ? "متصل" : "دون اتصال";
+}
 
 function removeSplashAfterDelay() {
   const tryRemove = (retries = 15) => {
@@ -92,14 +99,35 @@ async function refreshAuthorizedFiles(fileId = null) {
 
 function setStatus(message) { $("#app-status").textContent = message; $("#app-status").hidden = false; $("#subjects-list").hidden = true; $("#files-list").hidden = true; }
 function setHero(title, subtitle) { $("#hero-title").textContent = title; $("#hero-subtitle").textContent = subtitle; }
+function setCollectionMeta(title, subtitle, count) {
+  const heading = $("#collection-heading");
+  if (heading) heading.classList.toggle("is-files", Boolean(state.subject));
+  const titleNode = $("#collection-title");
+  const subtitleNode = $("#collection-subtitle");
+  const countNode = $("#collection-count");
+  if (titleNode) titleNode.textContent = title;
+  if (subtitleNode) subtitleNode.textContent = subtitle;
+  if (countNode) countNode.textContent = Number.isFinite(count) ? count : "—";
+}
+function setViewMode(filesView) {
+  document.body.classList.toggle("is-files-view", filesView);
+  const back = $("#back-to-subjects");
+  if (back) back.hidden = !filesView;
+}
+function animateList(root) {
+  root.classList.remove("list-enter");
+  requestAnimationFrame(() => root.classList.add("list-enter"));
+}
 function resetToSubjects() { state.subject = null; state.files = []; renderSubjects(); }
 
 function renderSubjects() {
   const root = $("#subjects-list");
   $("#app-status").hidden = true; root.hidden = false; $("#files-list").hidden = true;
+  setViewMode(false); setCollectionMeta("المواد الدراسية", "كل ما تحتاجه للمراجعة في مكان واحد", state.subjects.length);
   $("#reference-hero").classList.remove("is-files"); $("#open-global-code").classList.remove("hidden"); setHero("الصف التاسع", "اختر المادة لعرض الملفات"); applyHeroPalette();
   if (!state.subjects.length) { root.innerHTML = '<div class="reference-empty">لا توجد مواد منشورة حالياً</div>'; return; }
   root.innerHTML = state.subjects.map((subject) => { const colors = featuredPalette(subject.name); return `<button class="reference-card" style="--from:${colors.from};--to:${colors.to}" data-subject="${subject.id}"><span class="reference-card-icon">${icon(subject.icon_key, subject.name)}</span><span class="reference-card-copy"><b>${escapeHtml(subject.name)}</b><small>ملفات حصرية</small></span><i class="reference-card-arrow">‹</i></button>`; }).join("");
+  animateList(root);
   root.querySelectorAll("[data-subject]").forEach((button) => { button.onclick = () => openSubject(button.dataset.subject); });
 }
 
@@ -107,7 +135,7 @@ async function openSubject(id, pushHistory = true) {
   const subject = state.subjects.find((item) => item.id === id); if (!subject) return;
   state.subject = subject;
   if (pushHistory) history.pushState({ aqb9Subject: id }, "", `${location.pathname}${location.search}#subject=${encodeURIComponent(id)}`);
-  $("#open-global-code").classList.add("hidden"); setHero(subject.name, "ملفات حصرية متاحة"); applyHeroPalette(subject.name);
+  setViewMode(true); $("#open-global-code").classList.add("hidden"); setHero(subject.name, "ملفات حصرية متاحة"); applyHeroPalette(subject.name);
   const localFiles = cachedSubjectFiles(id);
   if (localFiles !== null) { state.files = localFiles; renderFiles(); setSyncStatus("جارٍ تحديث ملفات المادة…", "sync", 5000); }
   else setStatus("جارٍ تحميل الملفات…");
@@ -127,9 +155,11 @@ async function openSubject(id, pushHistory = true) {
 function renderFiles() {
   const root = $("#files-list"); const files = state.files;
   $("#app-status").hidden = true; root.hidden = false; $("#subjects-list").hidden = true;
+  setCollectionMeta("ملفات المادة", "اختر ملفاً للبدء بالمراجعة", files.length);
   if (!files.length) { root.innerHTML = '<div class="reference-empty">لا توجد ملفات منشورة لهذه المادة</div>'; return; }
   const colors = featuredPalette(state.subject?.name);
   root.innerHTML = files.map((file) => { const cover = safeCoverUrl(file.cover_url); const media = cover ? `<img src="${escapeHtml(cover)}" alt="معاينة ${escapeHtml(file.title)}" loading="lazy" referrerpolicy="no-referrer">` : `<span class="file-cover-placeholder" aria-hidden="true">▤</span>`; return `<article class="reference-card file-card" style="--from:${colors.from};--to:${colors.to}"><header class="file-card-head"><span class="file-title-row"><b>${escapeHtml(file.title)}</b><em class="vip-badge">VIP</em></span></header><div class="file-cover">${media}</div><footer class="file-card-footer"><button class="file-open-button" type="button" data-file="${file.id}" aria-label="فتح ملف ${escapeHtml(file.title)}">فتح الملف <span aria-hidden="true">←</span></button></footer></article>`; }).join("");
+  animateList(root);
   root.querySelectorAll("[data-file]").forEach((button) => { button.onclick = () => { requestAccess(button.dataset.file, button).catch(() => {}); }; });
 }
 
@@ -210,10 +240,17 @@ function load() {
 }
 
 $("#open-global-code").onclick = () => { state.target = "global"; showDialog("تفعيل كود الوصول الشامل"); };
+$("#refresh-content").onclick = async () => {
+  const button = $("#refresh-content");
+  button?.classList.add("is-loading");
+  try { await refreshCatalog(); } finally { button?.classList.remove("is-loading"); }
+};
+$("#back-to-subjects").onclick = () => { if (state.subject) history.back(); else resetToSubjects(); };
 $("#close-code-dialog").onclick = () => closeCodeDialog();
 $("#code-dialog").addEventListener("cancel", (event) => { event.preventDefault(); closeCodeDialog(); });
 $("#code-form").onsubmit = async (event) => { event.preventDefault(); const button = $("#verify-code"); button.disabled = true; $("#code-error").textContent = ""; try { await redeem($("#access-code").value.trim()); } catch (error) { $("#code-error").textContent = error.message || "الكود غير صحيح."; } finally { button.disabled = false; } };
 window.addEventListener("popstate", (event) => { if (skipCodeDialogPop) { skipCodeDialogPop = false; return; } if ($("#code-dialog").open) { closeCodeDialog(true); return; } const id = event.state?.aqb9Subject; if (id) openSubject(id, false); else if (state.subject) resetToSubjects(); });
-window.addEventListener("online", () => refreshCatalog());
-window.addEventListener("offline", () => setSyncStatus("تم الانتقال إلى النسخة المحفوظة دون إنترنت.", "offline", 4500));
+setConnectionStatus();
+window.addEventListener("online", () => { setConnectionStatus(true); refreshCatalog(); });
+window.addEventListener("offline", () => { setConnectionStatus(false); setSyncStatus("تم الانتقال إلى النسخة المحفوظة دون إنترنت.", "offline", 4500); });
 removeSplashAfterDelay(); registerOfflineSupport(); load();
