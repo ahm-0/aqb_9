@@ -30,6 +30,14 @@ function rememberOpenedFile(file) { if (!file?.id || !file?.drive_url) return; c
 function rememberedFile(id) { return readOpenedLinks()[id] || null; }
 function readAccessGrants() { const grants = readStore(AQB9.grantsKey, []); return Array.isArray(grants) ? grants.filter((grant) => /^[0-9a-f-]{36}$/i.test(String(grant?.token || ""))) : []; }
 function saveAccessGrants(grants) { writeStore(AQB9.grantsKey, grants); }
+function hasGlobalAccess() { return readAccessGrants().some((grant) => grant.scope === "grade9"); }
+function updateGlobalCodeVisibility() {
+  const button = $("#open-global-code");
+  if (!button) return;
+  const hidden = hasGlobalAccess();
+  button.hidden = hidden;
+  button.classList.toggle("hidden", hidden);
+}
 function saveAuthorizedFiles(files) { const links = readOpenedLinks(); (files || []).forEach((file) => { if (!file?.id || !file?.drive_url) return; state.cache[file.id] = file; links[file.id] = { drive_url: file.drive_url, title: file.title || "ملف", saved_at: new Date().toISOString() }; }); saveCache(); writeStore(AQB9.openedLinksKey, links); }
 function saveAccessGrant(data) { const token = String(data?.grant_token || "").trim(); if (!/^[0-9a-f-]{36}$/i.test(token)) return; const grants = readAccessGrants().filter((grant) => grant.token !== token); grants.push({ token, scope: data.scope === "grade9" ? "grade9" : "file", file_ids: (data.files || []).map((file) => file?.id).filter(Boolean), saved_at: new Date().toISOString() }); saveAccessGrants(grants.slice(-8)); }
 function escapeHtml(value) { return String(value || "").replace(/[&<>'"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]); }
@@ -124,7 +132,7 @@ function renderSubjects() {
   const root = $("#subjects-list");
   $("#app-status").hidden = true; root.hidden = false; $("#files-list").hidden = true;
   setViewMode(false); setCollectionMeta("المواد الدراسية", "كل ما تحتاجه للمراجعة في مكان واحد", state.subjects.length);
-  $("#reference-hero").classList.remove("is-files"); $("#open-global-code").classList.remove("hidden"); setHero("الصف التاسع", "اختر المادة لعرض الملفات"); applyHeroPalette();
+  $("#reference-hero").classList.remove("is-files"); updateGlobalCodeVisibility(); setHero("الصف التاسع", "اختر المادة لعرض الملفات"); applyHeroPalette();
   if (!state.subjects.length) { root.innerHTML = '<div class="reference-empty">لا توجد مواد منشورة حالياً</div>'; return; }
   root.innerHTML = state.subjects.map((subject) => { const colors = featuredPalette(subject.name); return `<button class="reference-card" style="--from:${colors.from};--to:${colors.to}" data-subject="${subject.id}"><span class="reference-card-icon">${icon(subject.icon_key, subject.name)}</span><span class="reference-card-copy"><b>${escapeHtml(subject.name)}</b><small>ملفات حصرية</small></span><i class="reference-card-arrow">‹</i></button>`; }).join("");
   animateList(root);
@@ -205,7 +213,7 @@ function showDialog(title) {
 async function redeem(code) {
   const data = await rpc("redeem_ninth_access_code", { p_code: code }); const files = data?.files || [];
   if (!files.length) throw new Error("لا توجد ملفات متاحة لهذا الكود.");
-  saveAuthorizedFiles(files); saveAccessGrant(data); closeCodeDialog();
+  saveAuthorizedFiles(files); saveAccessGrant(data); updateGlobalCodeVisibility(); closeCodeDialog();
   if (state.target && state.target !== "global") { const active = state.cache[state.target.id]; if (active) openAuthorizedFile(active); }
   else toast(`تم تفعيل ${files.length} ملفاً.`);
   if (state.subject) renderFiles();
@@ -245,10 +253,10 @@ function load() {
 }
 
 $("#open-global-code").onclick = () => { state.target = "global"; showDialog("تفعيل كود الوصول الشامل"); };
-$("#refresh-content").onclick = async () => {
-  const button = $("#refresh-content");
-  button?.classList.add("is-loading");
-  try { await refreshCatalog(); } finally { button?.classList.remove("is-loading"); }
+const refreshButton = $("#refresh-content");
+if (refreshButton) refreshButton.onclick = async () => {
+  refreshButton.classList.add("is-loading");
+  try { await refreshCatalog(); } finally { refreshButton.classList.remove("is-loading"); }
 };
 $("#back-to-subjects").onclick = () => { if (state.subject) history.back(); else resetToSubjects(); };
 $("#close-code-dialog").onclick = () => closeCodeDialog();
